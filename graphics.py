@@ -61,6 +61,10 @@ class GraphicsObject():
     def get_bounding_box(self) -> core.QRectF:
         return self._bounding_box
 
+    # overridden in PolylineObject
+    def intersects_rect(self, rect: core.QRectF) -> bool:
+        return self._bounding_box.intersects(rect)
+
     def translate(self, dx: float, dy: float) -> None:
         self._bounding_box.translate(core.QPointF(dx, dy))
 
@@ -445,6 +449,56 @@ class PolylineObject(GraphicsObject):
     def get_bounding_box(self) -> core.QRectF:
         d = self._stroke_thickness / 2.0
         return self._bounding_box.adjusted(-d, -d, d, d)
+
+    def intersects_rect(self, rect: core.QRectF) -> bool:
+        #TODO: apply subdivision if corresponding flag is set
+
+        d = self._stroke_thickness / 2.0
+        rect = rect.adjusted(-d, -d, d, d)
+        if not self._bounding_box.intersects(rect):
+            return False
+
+        p1 = self._points[0]
+        if rect.contains(p1):
+            return True
+  
+        for i in range(len(self._points) - 1):
+            p2 = self._points[i + 1]
+            if rect.contains(p2):
+                return True
+
+            x1 = p1.x()
+            y1 = p1.y()
+            x2 = p2.x()
+            y2 = p2.y()
+            minX = min(x1, x2)
+            maxX = max(x1, x2)
+            minY = min(y1, y2)
+            maxY = max(y1, y2)
+            r = core.QRectF(minX, minY, maxX - minX, maxY - minY)
+            if r.intersects(rect):
+                # Now we know: p1 and p2 are on the outside of rect
+                # and rect is contained in the rect spanned by p1 and p2.
+
+                dx = x2 - x1
+                dy = y2 - y1
+                # Equation for the line through p1 and p2:
+                # n.(x - x1) = 0, where n = (dy, -dx)
+                # Does rect possess vertices on either side of this line?
+                s1 = (dy * (rect.left() - x1) - dx * (rect.top() - y1) > 0)
+                s2 = (dy * (rect.right() - x1) - dx * (rect.top() - y1) > 0)
+                if s1 != s2:
+                    return True
+                s2 = (dy * (rect.left() - x1) - dx * (rect.bottom() - y1) > 0)
+                if s1 != s2:
+                    return True
+                s2 = (dy * (rect.right() - x1) - dx * (rect.bottom() - y1) > 0)
+                if s1 != s2:
+                    return True
+
+            p1 = p2
+
+        return False
 
     def draw(self, painter: gui.QPainter, is_selected: bool) -> None:
         points_to_draw = self._points

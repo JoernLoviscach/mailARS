@@ -30,7 +30,7 @@ class AddresseesDialog(widgets.QDialog):
         addresses_in_thumbnail: typing.List[typing.Tuple[str, str]], \
         address_from_preferences: str, \
         send_to_all: bool, \
-        send_to_explicit_receiver: bool):
+        send_to_explicit_receiver: bool) -> None:
         super().__init__(parent)
         self._send_to_all = send_to_all
         self._send_to_explicit_receiver = send_to_explicit_receiver
@@ -82,18 +82,18 @@ class AddresseesDialog(widgets.QDialog):
         button_box.accepted.connect(self.accept)
         button_box.rejected.connect(self.reject)
 
-    def _check_all_state_changed(self, state: int):
+    def _check_all_state_changed(self, state: int) -> None:
         for c, _, _ in self._checkboxes:
             c.setEnabled(state != core.Qt.Checked)
 
-    def accept(self):
+    def accept(self) -> None:
         self._send_to_all = self._check_all.isChecked()
         if self._check_from_prefs is not None:
             self._send_to_explicit_receiver = self._check_from_prefs.isChecked()
         self._addresses = [(address, name) for (checkbox, address, name) in self._checkboxes if checkbox.isChecked()]
         super().accept()
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()
 
     def send_to_all(self) -> bool:

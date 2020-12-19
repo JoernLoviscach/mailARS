@@ -435,7 +435,7 @@ class DrawingWidget(widgets.QWidget):
                 top = min(y, self._first_point.y())
                 width = abs(x - self._first_point.x())
                 height = abs(y - self._first_point.y())
-                text_element: typing.Optional[TextObject] = None
+                text_element: typing.Optional[graphics.TextObject] = None
                 if width < 5 and height < 5:
                     # get the topmost
                     for t in reversed([el for el in self._elements if isinstance(el, graphics.TextObject)]):
@@ -481,7 +481,7 @@ class DrawingWidget(widgets.QWidget):
                 width = max(1.0, abs(x - self._first_point.x()))  # max(1.0, ...) to handle clicking instead of dragging
                 height = max(1.0, abs(y - self._first_point.y()))
                 selection_rect = core.QRectF(left, top, width, height)
-                new_selected_elements = [el for el in self._elements if selection_rect.intersects(el.get_bounding_box())]
+                new_selected_elements = [el for el in self._elements if el.intersects_rect(selection_rect)]
 
                 modif = widgets.QApplication.keyboardModifiers()
                 if modif & core.Qt.ShiftModifier:

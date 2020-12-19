@@ -70,7 +70,7 @@ class CameraCapture(widgets.QDialog):
         bytesPerLine = 3 * width
         qImg = gui.QImage(rgb_flipped.data, width, height, bytesPerLine, gui.QImage.Format_RGB888)  
         self._viewfinder.setPixmap(gui.QPixmap(qImg))
-        # Hidden side effect: "mirrored" is also necessary to unbind the QImage from the buffer rgb.data
+        # important side effect: "mirrored" unbinds the QImage from the buffer rgb.data
         self._image = gui.QImage(rgb.data, width, height, bytesPerLine, gui.QImage.Format_RGB888).mirrored().mirrored()
 
     def accept(self) -> None:

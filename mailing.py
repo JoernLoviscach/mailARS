@@ -218,6 +218,22 @@ class _ReceiverThread(core.QThread):
                     try:
                         connection = imaplib.IMAP4_SSL(server)
                         connection.login(user, password)
+
+
+
+
+                        typ, data = connection.list('""', "*")
+                        if typ == "OK":
+                            for mbox in data:
+                                #flags, separator, name = email.utils..parse_mailbox(bytes.decode(mbox))
+                                #fmt = '{0}    : [Flags = {1}; Separator = {2}'
+                                #print(fmt.format(name, flags, separator))
+                                print(bytes.decode(mbox))
+
+
+
+
+
                         connection.select("INBOX")
                         first_request = True
                     except Exception as ex:
@@ -332,7 +348,7 @@ class _ReceiverThread(core.QThread):
                             connection = None
             self.msleep(300)
 
-    # should also called once before the thread starts
+    # should also be called once before the thread starts
     def update_receiver_connection_data(self, user: str, server: str, password: str) -> None:
         if user == "" or server == "":
             self.status_updated.emit("Bitte die Einstellungen für IMAP vervollständigen!")
