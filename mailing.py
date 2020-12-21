@@ -100,7 +100,7 @@ class _SenderRunnable(core.QRunnable):
             message = MIMEMultipart()
             message["From"] = email.utils.formataddr((self._name, self._smtp_sender))
             message["To"] = ", ".join(self._addresses)
-            message["Subject"] = "MailARS"
+            message["Subject"] = "mailARS, not intended for reading"
             message["Date"] = email.utils.format_datetime(self._when)
             message["X-MailARS-Message-ID"] = self._message_id
             message.attach(MIMEText("Alles in Attachments!", "plain"))
@@ -180,7 +180,7 @@ class _ReceiverThread(core.QThread):
         previous_request_time = time.perf_counter()
         first_request = True
 
-        forbidden_characters_in_names = re.compile("[^a-zA-Z0-9@\-\.]")
+        forbidden_characters_in_names = re.compile(r"[^a-zA-Z0-9@\-\.]")
 
         while(True):
             need_to_stop = self.isInterruptionRequested()
@@ -219,20 +219,15 @@ class _ReceiverThread(core.QThread):
                         connection = imaplib.IMAP4_SSL(server)
                         connection.login(user, password)
 
-
-
-
-                        typ, data = connection.list('""', "*")
-                        if typ == "OK":
-                            for mbox in data:
-                                #flags, separator, name = email.utils..parse_mailbox(bytes.decode(mbox))
-                                #fmt = '{0}    : [Flags = {1}; Separator = {2}'
-                                #print(fmt.format(name, flags, separator))
-                                print(bytes.decode(mbox))
-
-
-
-
+                        # Does the mailARS IMAP folder for processed messages exist already?
+                        # If not, create it.
+                        typ, data = connection.list(pattern="mailARS")
+                        if typ != "OK":
+                            raise RuntimeError("IMAP List ist fehlgeschlagen.")
+                        if data[0] is None or not data[0].decode().endswith("mailARS"):
+                            typ, data = connection.create("mailARS")
+                            if typ != "OK":
+                                raise RuntimeError("IMAP Create ist fehlgeschlagen.")
 
                         connection.select("INBOX")
                         first_request = True
@@ -251,15 +246,16 @@ class _ReceiverThread(core.QThread):
                         previous_request_time = current_request_time
                         try:
                             # Note that FETCH sets SEEN flag.
-                            req = '(SUBJECT "MailARS" UNSEEN)'
+                            req = '(SUBJECT "mailARS, not intended for reading" UNSEEN)'
                             if first_request:
-                                req = '(SUBJECT "MailARS")'
+                                req = '(SUBJECT "mailARS, not intended for reading")'
                                 first_request = False
                             typ, data = connection.search(None, req)
                             if typ != "OK":
                                 raise RuntimeError("IMAP Search ist fehlgeschlagen.")
-                            count = len(data[0].split())
-                            for num in data[0].split(): # num is the UID
+                            nums = data[0].decode().split()
+                            count = len(nums)
+                            for num in nums: # num is the UID
                                 self.status_updated.emit("Beim Holen von Mails: " + str(count))
                                 count -= 1
 
@@ -268,25 +264,25 @@ class _ReceiverThread(core.QThread):
                                     raise RuntimeError("IMAP Peek ist fehlgeschlagen.")
                                 msg = email.message_from_bytes(typing.cast(bytes, data[0][1]), policy=default)
                                 
-                                if msg["Subject"] != "MailARS":  # IMAP only does substring matching
+                                if msg["Subject"] != "mailARS, not intended for reading":  # IMAP only does substring matching
                                     continue
 
                                 if "X-MailARS-Message-ID" in msg and len(msg["X-MailARS-Message-ID"]) > 10:
                                     message_id = str(msg["X-MailARS-Message-ID"])
                                 else:
                                     message_id = str(msg["Message-ID"])
-                                # The message_id may contain dangerous stuff such as "..\..\".
+                                # message_id may contain dangerous stuff such as "..\..\".
                                 # Hence, sanitize:
                                 message_id = forbidden_characters_in_names.sub("_", message_id)
                                 
-                                with core.QMutexLocker(self._connection_data_mutex):
-                                    if message_id in known_message_ids:
-                                        continue
+                                if message_id in known_message_ids:
+                                    continue
 
                                 typ, data = connection.fetch(num, "(BODY[])")                            
                                 if typ != "OK":
                                     raise RuntimeError("IMAP Fetch ist fehlgeschlagen.")
-                                msg = email.message_from_bytes(typing.cast(bytes, data[0][1]), policy=default)
+                                message_data = typing.cast(bytes, data[0][1])
+                                msg = email.message_from_bytes(message_data, policy=default)
 
                                 name, address = email.utils.parseaddr(msg["From"])
                                 if address == "":
@@ -297,7 +293,7 @@ class _ReceiverThread(core.QThread):
                                 document_text: str = ""
                                 files: typing.Dict[str, core.QByteArray] = {}
                                 for part in msg.walk():
-                                    if part.get_content_disposition() == 'attachment':
+                                    if part.get_content_disposition() == "attachment":
                                         filename = part.get_filename()
                                         # The filenname may contain dangerous stuff such as "..\..\".
                                         # Hence:
@@ -316,6 +312,18 @@ class _ReceiverThread(core.QThread):
                                     #TODO
 
                                 self.mail_fetched.emit(address, name, elements, when, message_id)
+
+                                # Move the message to the mailARS folder
+                                typ, data = connection.copy(num, "mailARS")                            
+                                if typ != "OK":
+                                    raise RuntimeError("IMAP UID Copy ist fehlgeschlagen.")
+                                typ, data = connection.store(num , "+FLAGS", r"\Deleted")
+                                if typ != "OK":
+                                    raise RuntimeError("IMAP UID Store ist fehlgeschlagen.")
+
+                            typ, data = connection.expunge()
+                            if typ != "OK":
+                                raise RuntimeError("IMAP Expunge ist fehlgeschlagen.")
                             self.status_updated.emit("")
                         except Exception as ex:
                             self.status_updated.emit(_format_exception(ex))

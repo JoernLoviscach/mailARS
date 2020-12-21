@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <h1>mailARS 1.0.1</h1>
+    <h1>mailARS 1.0.2</h1>
     <h2>Was ist das?</h2>
     <p>mailARS ist ein Open-Source-Programm für Windows, macOS und Linux,
         mit dem Studierende während der (typischerweise virtuellen)
@@ -93,7 +93,7 @@
         ansprechen kann.</p>
     <p>Andere Programme wie GIMP oder Inkscape, die Python verwenden,
         ändern ggf. dessen Einstellungen, so dass mailARS nicht gleichzeitig mit
-        denen funktioniert.</p>
+        diesen funktioniert.</p>
 
     <h2>Einstellungen</h2>
     <p>Bei jedem Start fragt mailARS nach dem E-Mail-Passwort. Aus Sicherheitsgründen
@@ -164,11 +164,22 @@
     <p>Vor dem Absenden können Sie kontrollieren und verändern,
         an welche Adressaten die Mail geschickt wird;
         dazu klicken Sie auf <img src="addressees.png" alt="Adressaten">.</p>
-    <p>Weil die Mails über das normale Mailsystem geschickt werden, tauchen sie
-        auch in Ihrem normalen Mailprogramm auf. Um nichts beschädigen zu können,
-        löscht mailARS diese Mails nicht selbst. Nach der Sitzung können Sie
-        in Ihrem normalen Mail-Programm die
-        Mails mit dem Betreff <span class="typewriter">mailARS</span> löschen.</p>
+    <p>Damit Ihr Postfach nicht mit Mails überflutet wird, legt mailARS
+        dort einen Ordner namens mailARS an und verschiebt alle Mails mit
+        seinem Betreff <span class="typewriter">mailARS, not intended for reading</span>
+        dorthin. Sicherheitshalber werden diese Mails nicht
+        einfach gelöscht. Mit Hilfe Ihres üblichen E-Mail-Programms sollten Sie
+        diesen Ordner gelegentlich auf Irrläufer überprüfen
+        und ihn leeren. Etwa in Thunderbird müssen sie dazu diesen
+        – sonst unsichtbar bleibenden – Ordner
+        abonnieren (rechter Mausklick auf den Titel des Mail-Kontos
+        in der Liste am linken Bildschirmrand). Wenn Sie
+        eine automatische Weiterleitung vom Mail-Server der Hochschule
+        auf einen eigenen Server eingerichtet haben,
+        hilft das automatische Verschieben nicht; greifen Sie lieber direkt
+        auf den Mail-Server der Hochschule zu – am besten mit einem
+        Mail-Programm wie <a href="https://www.thunderbird.net/de/">Thunderbird</a>,
+        das mehrere Konten parallel verwalten kann.</p>
 
     <h2>Bedienung: Zeichenfunktionen</h2>
         <p>Mit <img src="draw.png" alt="Zeichnen"> wählen Sie das Zeichenwerkzeug
