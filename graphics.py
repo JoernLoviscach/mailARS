@@ -450,6 +450,9 @@ class PolylineObject(GraphicsObject):
         d = self._stroke_thickness / 2.0
         return self._bounding_box.adjusted(-d, -d, d, d)
 
+    def get_final_point(self) -> core.QPointF:
+        return self._points[-1]
+
     def intersects_rect(self, rect: core.QRectF) -> bool:
         #TODO: apply subdivision if corresponding flag is set
 

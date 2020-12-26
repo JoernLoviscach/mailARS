@@ -21,6 +21,7 @@ import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets 
 import PyQt5.QtGui as gui
 from enum import IntEnum
+import math
 import graphics
 import drag_button
 import text_editor
@@ -320,13 +321,15 @@ class DrawingWidget(widgets.QWidget):
         self._text_editor.move(self._text_editor.pos() + delta)
 
     def paintEvent(self, event: gui.QPaintEvent) -> None:
+        clip_rect = core.QRectF(event.rect())
         qp = gui.QPainter()
         qp.begin(self)
         qp.setRenderHints(typing.cast(gui.QPainter.RenderHints, gui.QPainter.Antialiasing | gui.QPainter.SmoothPixmapTransform))
         for el in self._elements:
             if el == self._text_editor.get_text_element():
                 continue  # don't show original text below editor
-            el.draw(qp, el in self._selected_elements)
+            if clip_rect.intersects(el.get_bounding_box()):
+                el.draw(qp, el in self._selected_elements)
         qp.end()
 
     def clean_ui(self) -> None:
@@ -387,8 +390,16 @@ class DrawingWidget(widgets.QWidget):
 
         if self._mode_of_ongoing_stroke == Mode.DRAWING and not self._alternate_function:
             if self._current_stroke is not None:
+                p1 = self._current_stroke.get_final_point()
                 self._current_stroke.append_point(core.QPointF(x, y))
-            self.update()
+                p2 = self._current_stroke.get_final_point()
+                th = self._current_stroke.get_stroke_thickness()
+                x1 = math.floor(min(p1.x(), p2.x()) - th)
+                y1 = math.floor(min(p1.y(), p2.y()) - th)
+                x2 = math.ceil(max(p1.x(), p2.x()) + th)
+                y2 = math.ceil(max(p1.y(), p2.y()) + th)
+                self.update(x1, y1, x2, y2)
+
         elif self._mode_of_ongoing_stroke == Mode.ERASING \
             or self._alternate_function and self._mode_of_ongoing_stroke == Mode.DRAWING:
             to_erase: typing.List[typing.Tuple[int, graphics.PolylineObject]] = \
@@ -400,11 +411,11 @@ class DrawingWidget(widgets.QWidget):
                 def undo_function() -> None:
                     for i, el in to_erase:
                         self._elements.insert(i, el)
-                    self.update()
+                        self.update(el.get_bounding_box().toAlignedRect())
                 def redo_function() -> None:
                     for _, el in to_erase:
                         self._elements.remove(el)  # looks safer than: del self._element[i] ((which would require "reversed"))
-                    self.update()
+                        self.update(el.get_bounding_box().toAlignedRect())
                 undo_redo.Command(self._undo_redo, undo_function, redo_function, True)
 
         elif self._mode_of_ongoing_stroke == Mode.TYPING:
