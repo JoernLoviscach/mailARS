@@ -43,10 +43,10 @@ loc = core.QLocale(preferences.get("language"))
 translator = core.QTranslator()
 if (translator.load(loc, "translation_")):
     app.installTranslator(translator)
-qtBaseTranslator = core.QTranslator()
-if (qtBaseTranslator.load("qtbase_" + loc.system().name(),
+qt_base_translator = core.QTranslator()
+if (qt_base_translator.load("qtbase_" + loc.system().name(),
     core.QLibraryInfo.location(core.QLibraryInfo.TranslationsPath))):
-    app.installTranslator(qtBaseTranslator)
+    app.installTranslator(qt_base_translator)
 
 def print_error(exception_type: typing.Type[BaseException], \
     value: BaseException, \
