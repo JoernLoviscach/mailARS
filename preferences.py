@@ -18,18 +18,19 @@
 from __future__ import annotations
 import typing
 import PyQt5.QtCore as core
-from PyQt5.QtCore import QObject
 import PyQt5.QtWidgets as widgets 
 import PyQt5.QtGui as gui
 import random
 import json
 import preferences
-import mailing
 
 
 _preferences: typing.Dict[str, typing.Any] = {
-    # better only use immutable types
-    # make sure to use the right types for initialization here as they will be used for conversion on loading
+    # Better only use immutable types.
+    # Use the right types for initialization here
+    # as they will be used for converting
+    # the data found in the preferences file.
+    "language": "en",
     "name": "",
     "smtp_sender": "",
     "smtp_server": "",
@@ -48,9 +49,13 @@ _preferences: typing.Dict[str, typing.Any] = {
 
 _password: str = ""
 
-def set_password(parent: widgets.QWidget) -> None:
+def set_password(parent: typing.Union[widgets.QWidget, widgets.QApplication]) -> None:
     global _password
-    _new_password, success = widgets.QInputDialog.getText(parent, "Passwort", "Mail-Passwort:", widgets.QLineEdit.Password, "")
+    par = parent
+    app = widgets.QApplication.instance()
+    if isinstance(parent, widgets.QApplication):
+        par = None
+    _new_password, success = widgets.QInputDialog.getText(par, app.translate("Password", "Password"), app.translate("Password", "Mail password"), widgets.QLineEdit.Password, "")
     if success:
         _password = _new_password.strip()
 
@@ -104,11 +109,33 @@ def _emit_update_receiver_connection_data(user: str, server: str, password: str)
 class PreferencesDialog(widgets.QDialog):
     def __init__(self, parent: widgets.QWidget):
         super().__init__(parent)
-        self.setWindowTitle("Einstellungen")
+        self.setWindowTitle(self.tr("Settings"))
         layout = widgets.QVBoxLayout()
         self.setLayout(layout)
 
-        mail_group = widgets.QGroupBox("Mail-Konfiguration")
+        language_group = widgets.QGroupBox(self.tr("Language"))
+        layout.addWidget(language_group)
+        language_group_outer_layout = widgets.QVBoxLayout()
+        language_group.setLayout(language_group_outer_layout)
+
+        language_group_radios = widgets.QWidget()
+        language_group_outer_layout.addWidget(language_group_radios)
+        language_group_radios_layout = widgets.QHBoxLayout()
+        language_group_radios.setLayout(language_group_radios_layout)
+
+        #TODO: Generate these options from the names of the translation files
+        self._radio_english = widgets.QRadioButton()
+        self._radio_english.setText("en")
+        self._radio_english.setChecked(get("language") == "en")
+        language_group_radios_layout.addWidget(self._radio_english, core.Qt.AlignLeft)
+        self._radio_german = widgets.QRadioButton()
+        self._radio_german.setText("de")
+        self._radio_german.setChecked(get("language") == "de")
+        language_group_radios_layout.addWidget(self._radio_german, core.Qt.AlignLeft)
+
+        language_group_outer_layout.addWidget(widgets.QLabel(self.tr("Changes are applied on next start")))
+
+        mail_group = widgets.QGroupBox(self.tr("Mail Settings"))
         layout.addWidget(mail_group)
         mail_group_layout = widgets.QFormLayout()
         mail_group.setLayout(mail_group_layout)
@@ -116,39 +143,41 @@ class PreferencesDialog(widgets.QDialog):
         # TODO: set buddies
         self._name: widgets.QLineEdit = widgets.QLineEdit()
         self._name.setText(get("name"))
-        mail_group_layout.addRow(widgets.QLabel("Name zum Anzeigen"), self._name)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("Name to be displayed")), self._name)
         self._smtp_sender: widgets.QLineEdit = widgets.QLineEdit()
         self._smtp_sender.setText(get("smtp_sender"))
-        mail_group_layout.addRow(widgets.QLabel("SMTP-Absender"), self._smtp_sender)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("SMTP sender")), self._smtp_sender)
         self._imap_user: widgets.QLineEdit = widgets.QLineEdit()
         self._imap_user.setText(get("imap_user"))
-        mail_group_layout.addRow(widgets.QLabel("IMAP-User"), self._imap_user)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("IMAP user")), self._imap_user)
 
         self._smtp_receiver: widgets.QLineEdit = widgets.QLineEdit()
         self._smtp_receiver.setText(get("smtp_receiver"))
-        mail_group_layout.addRow(widgets.QLabel("SMTP-Empfänger"), self._smtp_receiver)
-        mail_group_layout.addRow(widgets.QLabel("    (SMTP-Empfänger leer = auf eingehende Mails reagieren)"))
+        mail_group_layout.addRow(widgets.QLabel(self.tr("SMTP receiver")), self._smtp_receiver)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("Leave empty to only react to incoming mails")))
 
         self._smtp_server: widgets.QLineEdit = widgets.QLineEdit()
         self._smtp_server.setText(get("smtp_server"))
-        mail_group_layout.addRow(widgets.QLabel("SMTP-Server"), self._smtp_server)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("SMTP server")), self._smtp_server)
         self._imap_server: widgets.QLineEdit = widgets.QLineEdit()
         self._imap_server.setText(get("imap_server"))
-        mail_group_layout.addRow(widgets.QLabel("IMAP-Server"), self._imap_server)
+        mail_group_layout.addRow(widgets.QLabel(self.tr("IMAP server")), self._imap_server)
 
-        misc_group = widgets.QGroupBox("Sonstiges")
+        misc_group = widgets.QGroupBox(self.tr("Miscellaneous"))
         layout.addWidget(misc_group)
         misc_group_layout = widgets.QFormLayout()
         misc_group.setLayout(misc_group_layout)
 
         self._smooth_drawing: widgets.QCheckBox = widgets.QCheckBox()
-        self._smooth_drawing.setText("Kurven nach der Eingabe glätten")
+        self._smooth_drawing.setText(self.tr("Smooth curves after drawing"))
         self._smooth_drawing.setChecked(get("smooth_drawing"))
         misc_group_layout.addRow(widgets.QLabel(""), self._smooth_drawing)
 
+        layout.addStretch()
+
         button_password = widgets.QPushButton()
         layout.addWidget(button_password)
-        button_password.setText("Mail-Passwort ändern...")
+        button_password.setText(self.tr("Change mail password..."))
         button_password.clicked.connect(self.set_password)
 
         button_box = widgets.QDialogButtonBox(typing.cast(widgets.QDialogButtonBox.StandardButtons, widgets.QDialogButtonBox.Ok | widgets.QDialogButtonBox.Cancel))
@@ -161,6 +190,10 @@ class PreferencesDialog(widgets.QDialog):
         _emit_update_receiver_connection_data(get("imap_user"), get("imap_server"), get_password())
 
     def accept(self):
+        lang = "en"
+        if self._radio_german.isChecked():
+            lang = "de"
+        set("language", lang)
         set("name", self._name.text().strip())
         set("smtp_sender", self._smtp_sender.text().strip())
         set("smtp_server", self._smtp_server.text().strip())

@@ -29,20 +29,35 @@ import types
 import traceback
 
 os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
+# locale is easier to use on Python data than QLocale,
+# so we employ both
 locale.setlocale(locale.LC_ALL, "")
+
 app = widgets.QApplication(sys.argv)
 app.setApplicationName("mailARS")
+
+preferences.load()
+
+# Remember to "release" the translations as .qm files!
+loc = core.QLocale(preferences.get("language"))
+translator = core.QTranslator()
+if (translator.load(loc, "translation_")):
+    app.installTranslator(translator)
+qtBaseTranslator = core.QTranslator()
+if (qtBaseTranslator.load("qtbase_" + loc.system().name(),
+    core.QLibraryInfo.location(core.QLibraryInfo.TranslationsPath))):
+    app.installTranslator(qtBaseTranslator)
 
 def print_error(exception_type: typing.Type[BaseException], \
     value: BaseException, \
     tb: types.TracebackType) -> None:
-    widgets.QMessageBox.critical(None, "Interner Fehler", \
-        "Bitte machen Sie hiervon einen Screenshot!\n"
-        + "".join(traceback.format_exception(exception_type, value, tb)))
+    widgets.QMessageBox.critical(None, \
+        app.translate("Internal Error", "Internal Error"), \
+        app.translate("Internal Error", "Please take a screenshot of this:") \
+        + "\n" + "".join(traceback.format_exception(exception_type, value, tb)))
 sys.excepthook = print_error
 
-preferences.load()
-preferences.set_password(None)
+preferences.set_password(app)
 window = mailboxes_window.MailboxesWindow()
 app.exec_()
 preferences.save()

@@ -244,7 +244,7 @@ class Thumbnail(widgets.QWidget):
                     f.commit()
 
         except Exception as ex:
-            widgets.QMessageBox.critical(self, "Schreibfehler", "Fehler beim Schreiben der Nachricht " + self._message_id + ":\n" + str(ex))
+            widgets.QMessageBox.critical(self, self.tr("File Error"), self.tr("Error when writing message") + " " + self._message_id + ":\n" + str(ex))
 
     @staticmethod
     def load(mailbox_wid: mailbox_widget.MailboxWidget, \
@@ -284,4 +284,4 @@ class Thumbnail(widgets.QWidget):
                 os.remove(os.path.join(folder, f))
             os.rmdir(folder)
         except Exception as ex:
-            widgets.QMessageBox.critical(self, "Löschfehler", "Fehler beim Löschen des Verzeichnisses " + folder + ":\n" + str(ex))
+            widgets.QMessageBox.critical(self, self.tr("File Error"), self.tr("Error when removing directory") + " " + folder + ":\n" + str(ex))

@@ -50,7 +50,7 @@ class TextEditor(widgets.QFrame):
         self.setMouseTracking(True)
         self.setFrameShape(widgets.QFrame.Box)
         self.setLineWidth(4)
-        layout = widgets.QGridLayout() #   .QHBoxLayout()
+        layout = widgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(layout)
         self._text_edit = widgets.QPlainTextEdit(self)

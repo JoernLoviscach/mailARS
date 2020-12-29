@@ -117,7 +117,7 @@ class DrawingWidget(widgets.QWidget):
         # Note: We must not replace the list self._elements by a new one
         #       because this list is being shared.
         if len(self._selected_elements) == 0:
-            reply = widgets.QMessageBox.question(self, "Sicherheitsabfrage", "Alles löschen?", widgets.QMessageBox.Yes | widgets.QMessageBox.Cancel)
+            reply = widgets.QMessageBox.question(self, self.tr("Safety prompt"), self.tr("Delete all?"), widgets.QMessageBox.Yes | widgets.QMessageBox.Cancel)
             if reply == widgets.QMessageBox.Yes:
                 elements_copy = self._elements.copy()
                 def undo_function() -> None:

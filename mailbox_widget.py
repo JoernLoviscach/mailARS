@@ -58,7 +58,7 @@ class MailboxWidget(widgets.QScrollArea):
                 self.update_layout()
                 self.update()
         except Exception as ex:
-            widgets.QMessageBox.critical(self, "Fehler", "Dateifehler in " + self._folder_name + ":\n" + str(ex))
+            widgets.QMessageBox.critical(self, self.tr("Error"), self.tr("File error:") + self._folder_name + "\n" + str(ex))
 
     def get_folder_name(self) -> str:
         return self._folder_name
@@ -157,7 +157,7 @@ class MailboxWidget(widgets.QScrollArea):
             to_print = self._items
 
         if len(to_print) == 0:
-            widgets.QMessageBox.information(self, "Information", "Es gibt nichts zu exportieren!")
+            widgets.QMessageBox.information(self, self.tr("Information"), self.tr("Nothing selected for export!"))
             return False
 
         try:
@@ -189,7 +189,7 @@ class MailboxWidget(widgets.QScrollArea):
                     printer.newPage()
             painter.end()
         except Exception as ex:
-            widgets.QMessageBox.critical(self, "Fehler", str(ex))
+            widgets.QMessageBox.critical(self, self.tr("Error"), str(ex))
             return False
             
         return True

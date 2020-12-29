@@ -30,7 +30,7 @@ class CameraCapture(widgets.QDialog):
         self._image: typing.Optional[gui.QImage] = None
         self._cap = cv2.VideoCapture(cv2.CAP_DSHOW)  # cv2.CAP_DSHOW to not get a "terminating async callback" warning
         if self._cap is None or not self._cap.isOpened():
-            raise RuntimeError("Kamera fehlt oder ist belegt.")
+            raise RuntimeError(self.tr("Camera is missing or not already in use."))
         self._viewfinder = widgets.QLabel(self)
 
         self._buttonBox = widgets.QDialogButtonBox(widgets.QDialogButtonBox.Ok | widgets.QDialogButtonBox.Cancel)

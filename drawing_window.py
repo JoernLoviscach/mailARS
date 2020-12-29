@@ -47,7 +47,7 @@ class DrawingWindow(widgets.QMainWindow):
         self.addToolBar(self._toolbar)
 
         self._button_send = widgets.QToolButton()
-        self._button_send.setToolTip("Senden ▹ Strg+⏎")
+        self._button_send.setToolTip(self.tr("Send"))
         self._button_send.setIcon(gui.QIcon("need_to_send.png" if self._is_dirty else "send.png"))
         self._button_send.setIconSize(core.QSize(32, 32))
         self._button_send.clicked.connect(self._drawing_widget.clean_ui)
@@ -55,14 +55,14 @@ class DrawingWindow(widgets.QMainWindow):
         self._toolbar.addWidget(self._button_send)
 
         self._button_addresses = widgets.QToolButton()
-        self._button_addresses.setToolTip("Addressaten... ▹ A")
+        self._button_addresses.setToolTip(self.tr("Addressees"))
         self._button_addresses.setIcon(gui.QIcon("addressees.png"))
         self._button_addresses.setIconSize(core.QSize(32, 32))
         self._button_addresses.clicked.connect(self._exec_addressees_dialog)
         self._toolbar.addWidget(self._button_addresses)
 
         self._button_undo = widgets.QToolButton()
-        self._button_undo.setToolTip("Rückgängig ▹ Z")
+        self._button_undo.setToolTip(self.tr("Undo"))
         self._button_undo.setIcon(gui.QIcon("undo.png"))
         self._button_undo.setIconSize(core.QSize(32, 32))
         self._button_undo.clicked.connect(self._undo)
@@ -70,15 +70,20 @@ class DrawingWindow(widgets.QMainWindow):
         self._toolbar.addWidget(self._button_undo)
 
         self._button_redo = widgets.QToolButton()
-        self._button_redo.setToolTip("Wiederholen ▹ Y")
+        self._button_redo.setToolTip(self.tr("Redo"))
         self._button_redo.setIcon(gui.QIcon("redo.png"))
         self._button_redo.setIconSize(core.QSize(32, 32))
         self._button_redo.clicked.connect(self._redo)
         self._button_redo.setEnabled(False)
         self._toolbar.addWidget(self._button_redo)
 
+        #TODO: solve this with stylesheets
         label_separator = widgets.QLabel()
-        label_separator.setText("      Zeichnung:")
+        label_separator.setText("      ")
+        self._toolbar.addWidget(label_separator)
+
+        label_separator = widgets.QLabel()
+        label_separator.setText(self.tr("Drawing:"))
         self._toolbar.addWidget(label_separator)
 
         self._button_group_mode = widgets.QButtonGroup(self._toolbar)
@@ -86,7 +91,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._button_group_mode.buttonClicked.connect(self._tool_changed)
         
         self._button_draw = widgets.QToolButton()
-        self._button_draw.setToolTip("Zeichnen ▹ Q")
+        self._button_draw.setToolTip(self.tr("Draw"))
         self._button_draw.setIcon(gui.QIcon("draw.png"))
         self._button_draw.setIconSize(core.QSize(32, 32))
         self._button_group_mode.addButton(self._button_draw, drawing_widget.Mode.DRAWING)
@@ -99,7 +104,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._toolbar.addWidget(self._label_stroke_preview)
 
         self._button_stroke_color = widgets.QToolButton()
-        self._button_stroke_color.setToolTip("Farbe... ▹ S")
+        self._button_stroke_color.setToolTip(self.tr("Color"))
         self._button_stroke_color.setIcon(gui.QIcon("color.png"))
         self._button_stroke_color.setIconSize(core.QSize(32, 32))
         self._button_stroke_color.clicked.connect(self._exec_color_dialog)
@@ -116,7 +121,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._silder_stroke_thickness.setTickPosition(widgets.QSlider.TicksLeft)
         self._silder_stroke_thickness.valueChanged.connect(self._stroke_thickness_changed)
         self._button_stroke_thickness = widgets.QToolButton()
-        self._button_stroke_thickness.setToolTip("Dicke ▹ D")
+        self._button_stroke_thickness.setToolTip(self.tr("Thickness"))
         self._button_stroke_thickness.setIcon(gui.QIcon("stroke_thickness.png"))
         self._button_stroke_thickness.setIconSize(core.QSize(32, 32))
         self._button_stroke_thickness.clicked.connect(self._exec_stroke_thickness_slider)
@@ -125,19 +130,24 @@ class DrawingWindow(widgets.QMainWindow):
         self._set_stroke_icon()
 
         self._button_erase = widgets.QToolButton()
-        self._button_erase.setToolTip("Radieren ▹ W")
+        self._button_erase.setToolTip(self.tr("Erase"))
         self._button_erase.setIcon(gui.QIcon("erase.png"))
         self._button_erase.setIconSize(core.QSize(32, 32))
         self._button_erase.setCheckable(True)
         self._toolbar.addWidget(self._button_erase)
         self._button_group_mode.addButton(self._button_erase, drawing_widget.Mode.ERASING)
 
+        #TODO: solve this with stylesheets
         label_separator = widgets.QLabel()
-        label_separator.setText("      Text:")
+        label_separator.setText("      ")
+        self._toolbar.addWidget(label_separator)
+
+        label_separator = widgets.QLabel()
+        label_separator.setText(self.tr("Text:"))
         self._toolbar.addWidget(label_separator)
 
         self._button_text = widgets.QToolButton()
-        self._button_text.setToolTip("Tippen ▹ E")
+        self._button_text.setToolTip(self.tr("Type"))
         self._button_text.setIcon(gui.QIcon("text.png"))
         self._button_text.setIconSize(core.QSize(32, 32))
         self._button_text.setCheckable(True)
@@ -155,29 +165,39 @@ class DrawingWindow(widgets.QMainWindow):
         self._silder_font_size.setTickPosition(widgets.QSlider.TicksLeft)
         self._silder_font_size.valueChanged.connect(self._font_size_changed)
         self._button_font_size = widgets.QToolButton()
-        self._button_font_size.setToolTip("Größe ▹ F")
+        self._button_font_size.setToolTip(self.tr("Size"))
         self._button_font_size.setIcon(gui.QIcon("font_size.png"))
         self._button_font_size.setIconSize(core.QSize(32, 32))
         self._button_font_size.clicked.connect(self._exec_font_size_slider)
         self._toolbar.addWidget(self._button_font_size)
 
+        #TODO: solve this with stylesheets
         label_separator = widgets.QLabel()
-        label_separator.setText("      Foto:")
+        label_separator.setText("      ")
+        self._toolbar.addWidget(label_separator)
+
+        label_separator = widgets.QLabel()
+        label_separator.setText(self.tr("Photo:"))
         self._toolbar.addWidget(label_separator)
 
         self._button_photo = widgets.QToolButton()
-        self._button_photo.setToolTip("Foto ▹ G")
+        self._button_photo.setToolTip(self.tr("Take Photo"))
         self._button_photo.setIcon(gui.QIcon("photo.png"))
         self._button_photo.setIconSize(core.QSize(32, 32))
         self._button_photo.clicked.connect(self._shoot)
         self._toolbar.addWidget(self._button_photo)
 
+        #TODO: solve this with stylesheets
         label_separator = widgets.QLabel()
-        label_separator.setText("      Auswahl:")
+        label_separator.setText("      ")
+        self._toolbar.addWidget(label_separator)
+
+        label_separator = widgets.QLabel()
+        label_separator.setText(self.tr("Selection:"))
         self._toolbar.addWidget(label_separator)
 
         self._button_select = widgets.QToolButton()
-        self._button_select.setToolTip("Auswählen ▹ R")
+        self._button_select.setToolTip(self.tr("Select"))
         self._button_select.setIcon(gui.QIcon("select.png"))
         self._button_select.setIconSize(core.QSize(32, 32))
         self._button_select.setCheckable(True)
@@ -185,7 +205,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._button_group_mode.addButton(self._button_select, drawing_widget.Mode.SELECTING)
 
         self._button_delete = widgets.QToolButton()
-        self._button_delete.setToolTip("Löschen ▹ Entf")
+        self._button_delete.setToolTip(self.tr("Delete"))
         self._button_delete.setIcon(gui.QIcon("delete.png"))
         self._button_delete.setIconSize(core.QSize(32, 32))
         self._button_delete.clicked.connect(self._drawing_widget.clean_ui)
@@ -372,7 +392,7 @@ class DrawingWindow(widgets.QMainWindow):
                 self._drawing_widget.add_image(img)
                 self.set_dirty()
         except Exception as ex:
-            widgets.QMessageBox.critical(self, "Warnung", str(ex))
+            widgets.QMessageBox.critical(self, self.tr("Warning"), str(ex))
         finally:
             if dlg is not None:
                 dlg.close()  #TODO: Get completely rid of it.

@@ -38,26 +38,26 @@ class MailboxesWindow(widgets.QMainWindow):
         self.setCentralWidget(self._tabs)
 
         self._inbox: mailbox_widget.MailboxWidget = mailbox_widget.MailboxWidget(self, "inbox")
-        self._tabs.addTab(self._inbox, "Empfangen")
+        self._tabs.addTab(self._inbox, self.tr("Inbox"))
 
         self._drafts: mailbox_widget.MailboxWidget = mailbox_widget.MailboxWidget(self, "drafts")
-        self._tabs.addTab(self._drafts, "Entwürfe")
+        self._tabs.addTab(self._drafts, self.tr("Drafts"))
 
         self._outbox: mailbox_widget.MailboxWidget = mailbox_widget.MailboxWidget(self, "outbox")
-        self._tabs.addTab(self._outbox, "Gesendet")
+        self._tabs.addTab(self._outbox, self.tr("Outbox"))
 
         toolbar = widgets.QToolBar(self)
         self.addToolBar(toolbar)
 
         self._button_fetch_mail = widgets.QToolButton(self)
-        self._button_fetch_mail.setToolTip("Mails holen")
+        self._button_fetch_mail.setToolTip(self.tr("Fetch mail"))
         self._button_fetch_mail.setIcon(gui.QIcon("fetch.png"))
         self._button_fetch_mail.setIconSize(core.QSize(32, 32))
         self._button_fetch_mail.clicked.connect(self._fetch_mails)
         toolbar.addWidget(self._button_fetch_mail)
 
         self._button_group_by_sender = widgets.QToolButton(self)
-        self._button_group_by_sender.setToolTip("Nur letzte empfangene Mail jeder Person zeigen")
+        self._button_group_by_sender.setToolTip(self.tr("Only show latest mail of every sender"))
         self._button_group_by_sender.setIcon(gui.QIcon("group_by_sender.png"))
         self._button_group_by_sender.setIconSize(core.QSize(32, 32))
         self._button_group_by_sender.clicked.connect(self._group_by_sender)
@@ -68,7 +68,7 @@ class MailboxesWindow(widgets.QMainWindow):
         toolbar.addWidget(self._button_group_by_sender)
 
         button_new_draft = widgets.QToolButton(self)
-        button_new_draft.setToolTip("Neuer Entwurf")
+        button_new_draft.setToolTip(self.tr("New draft"))
         button_new_draft.setIcon(gui.QIcon("new.png"))
         button_new_draft.setIconSize(core.QSize(32, 32))
         button_new_draft.clicked.connect(self._new_draft)
@@ -79,7 +79,7 @@ class MailboxesWindow(widgets.QMainWindow):
         toolbar.addWidget(label_separator)
 
         self._button_pdf_export = widgets.QToolButton(self)
-        self._button_pdf_export.setToolTip("PDF-Export")
+        self._button_pdf_export.setToolTip(self.tr("Export as PDF"))
         self._button_pdf_export.setIcon(gui.QIcon("export_to_pdf.png"))
         self._button_pdf_export.setIconSize(core.QSize(32, 32))
         self._button_pdf_export.clicked.connect(self._export_pdf)
@@ -91,7 +91,7 @@ class MailboxesWindow(widgets.QMainWindow):
         label_separator = widgets.QLabel()
         label_separator.setText("      ")
         toolbar.addWidget(label_separator)
-
+        
         self._frame_num_columns = widgets.QFrame(toolbar, core.Qt.Popup)
         layout_num_columns = widgets.QHBoxLayout()
         self._frame_num_columns.setLayout(layout_num_columns)
@@ -104,7 +104,7 @@ class MailboxesWindow(widgets.QMainWindow):
         self._slider_num_columns.setTickPosition(widgets.QSlider.TicksLeft)
         self._slider_num_columns.valueChanged.connect(self._num_columns_changed)
         self._button_num_columns = widgets.QToolButton()
-        self._button_num_columns.setToolTip("Zahl an Spalten")
+        self._button_num_columns.setToolTip(self.tr("Number of columns"))
         self._button_num_columns.setIcon(gui.QIcon("columns.png"))
         self._button_num_columns.setIconSize(core.QSize(32, 32))
         self._button_num_columns.clicked.connect(self._exec_num_columns_slider)
@@ -115,7 +115,7 @@ class MailboxesWindow(widgets.QMainWindow):
         toolbar.addWidget(label_separator)
 
         button_edit_preferences = widgets.QToolButton(self)
-        button_edit_preferences.setToolTip("Einstellungen")
+        button_edit_preferences.setToolTip(self.tr("Settings"))
         button_edit_preferences.setIcon(gui.QIcon("settings.png"))
         button_edit_preferences.setIconSize(core.QSize(32, 32))
         button_edit_preferences.clicked.connect(self._edit_preferences)
@@ -160,7 +160,7 @@ class MailboxesWindow(widgets.QMainWindow):
         self._other_main_windows.append(window)
 
     def closeEvent(self, event: gui.QCloseEvent) -> None:
-        reply = widgets.QMessageBox.question(self, "Sicherheitsabfrage", "Wirklich beenden?")
+        reply = widgets.QMessageBox.question(self, self.tr("Safety prompt"), self.tr("Do you really want to quit?"))
         if reply != widgets.QMessageBox.Yes:
             event.ignore()
             return

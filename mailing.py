@@ -89,11 +89,11 @@ class _SenderRunnable(core.QRunnable):
         server: typing.Optional[smtplib.SMTP] = None
         try:
             if self._name == "" or self._smtp_sender == "" or self._password == "":
-                raise RuntimeError("Einstellungen für SMTP sind unvollständig!")
+                raise RuntimeError(self.tr("SMTP settings are incomplete."))
             if len(self._addresses) == 0:
-                raise RuntimeError("Keine Empfänger verfügbar!")
+                raise RuntimeError(self.tr("No addressees available"))
 
-            _sender_signals.status_updated.emit("Beim Senden")
+            _sender_signals.status_updated.emit(self.tr("Sending"))
 
             text, files = graphics.serialize(self._elements)
 
@@ -223,11 +223,11 @@ class _ReceiverThread(core.QThread):
                         # If not, create it.
                         typ, data = connection.list(pattern="mailARS")
                         if typ != "OK":
-                            raise RuntimeError("IMAP List ist fehlgeschlagen.")
+                            raise RuntimeError(self.tr("IMAP List failed."))
                         if data[0] is None or not data[0].decode().endswith("mailARS"):
                             typ, data = connection.create("mailARS")
                             if typ != "OK":
-                                raise RuntimeError("IMAP Create ist fehlgeschlagen.")
+                                raise RuntimeError(self.tr("IMAP Create failed."))
 
                         connection.select("INBOX")
                         first_request = True
@@ -252,16 +252,16 @@ class _ReceiverThread(core.QThread):
                                 first_request = False
                             typ, data = connection.search(None, req)
                             if typ != "OK":
-                                raise RuntimeError("IMAP Search ist fehlgeschlagen.")
+                                raise RuntimeError(self.tr("IMAP Search failed."))
                             nums = data[0].decode().split()
                             count = len(nums)
                             for num in nums: # num is the UID
-                                self.status_updated.emit("Beim Holen von Mails: " + str(count))
+                                self.status_updated.emit(self.tr("Fetching mail:") + " " + str(count))
                                 count -= 1
 
                                 typ, data = connection.fetch(num, "(BODY.PEEK[HEADER])")                            
                                 if typ != "OK":
-                                    raise RuntimeError("IMAP Peek ist fehlgeschlagen.")
+                                    raise RuntimeError(self.tr("IMAP Peek failed."))
                                 msg = email.message_from_bytes(typing.cast(bytes, data[0][1]), policy=default)
                                 
                                 if msg["Subject"] != "mailARS, not intended for reading":  # IMAP only does substring matching
@@ -280,13 +280,13 @@ class _ReceiverThread(core.QThread):
 
                                 typ, data = connection.fetch(num, "(BODY[])")                            
                                 if typ != "OK":
-                                    raise RuntimeError("IMAP Fetch ist fehlgeschlagen.")
+                                    raise RuntimeError(self.tr("IMAP Fetch failed."))
                                 message_data = typing.cast(bytes, data[0][1])
                                 msg = email.message_from_bytes(message_data, policy=default)
 
                                 name, address = email.utils.parseaddr(msg["From"])
                                 if address == "":
-                                    name += " (Fehler in Adresse)"
+                                    name += " " + self.tr("(Error in address)")
                                 when = email.utils.parsedate_to_datetime(msg["Date"])
 
                                 #TODO: Handle replies that are standard text mails or PDF attachments.
@@ -316,14 +316,14 @@ class _ReceiverThread(core.QThread):
                                 # Move the message to the mailARS folder
                                 typ, data = connection.copy(num, "mailARS")                            
                                 if typ != "OK":
-                                    raise RuntimeError("IMAP UID Copy ist fehlgeschlagen.")
+                                    raise RuntimeError(self.tr("IMAP UID Copy failed."))
                                 typ, data = connection.store(num , "+FLAGS", r"\Deleted")
                                 if typ != "OK":
-                                    raise RuntimeError("IMAP UID Store ist fehlgeschlagen.")
+                                    raise RuntimeError(self.tr("IMAP UID Store failed."))
 
                             typ, data = connection.expunge()
                             if typ != "OK":
-                                raise RuntimeError("IMAP Expunge ist fehlgeschlagen.")
+                                raise RuntimeError(self.tr("IMAP Expunge failed."))
                             self.status_updated.emit("")
                         except Exception as ex:
                             self.status_updated.emit(_format_exception(ex))
@@ -359,10 +359,10 @@ class _ReceiverThread(core.QThread):
     # should also be called once before the thread starts
     def update_receiver_connection_data(self, user: str, server: str, password: str) -> None:
         if user == "" or server == "":
-            self.status_updated.emit("Bitte die Einstellungen für IMAP vervollständigen!")
+            self.status_updated.emit(self.tr("IMAP settings are incomplete."))
             return
         if password == "":
-            self.status_updated.emit("Das Mail-Passwort darf nicht leer sein!")
+            self.status_updated.emit(self.tr("The mail password cannot be empty."))
             return
         with core.QMutexLocker(self._connection_data_mutex):
             self._user = user

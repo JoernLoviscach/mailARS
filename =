@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0">
+<context>
+    <name>MailboxesWindow</name>
+    <message>
+        <location filename="mailboxes_window.py" line="41"/>
+        <source>Inbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="44"/>
+        <source>Drafts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="47"/>
+        <source>Outbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="53"/>
+        <source>Fetch mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="60"/>
+        <source>Only show latest mail of every sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="71"/>
+        <source>New draft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="82"/>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="107"/>
+        <source>Number of columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="118"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="163"/>
+        <source>Safety prompt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mailboxes_window.py" line="163"/>
+        <source>Do you really want to quit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+</TS>
