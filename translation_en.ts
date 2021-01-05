@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="en" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.1" language="en" sourcelanguage="en">
 <context>
     <name>CameraCapture</name>
     <message>
@@ -295,6 +296,24 @@
     </message>
 </context>
 <context>
+    <name>Sender</name>
+    <message>
+        <location filename="mailing.py" line="93"/>
+        <source>SMTP settings are incomplete.</source>
+        <translation>SMTP settings are incomplete.</translation>
+    </message>
+    <message>
+        <location filename="mailing.py" line="95"/>
+        <source>No addressees available</source>
+        <translation>No addressees available</translation>
+    </message>
+    <message>
+        <location filename="mailing.py" line="97"/>
+        <source>Sending</source>
+        <translation>Sending</translation>
+    </message>
+</context>
+<context>
     <name>Thumbnail</name>
     <message>
         <location filename="thumbnail.py" line="247"/>
@@ -315,62 +334,62 @@
 <context>
     <name>_ReceiverThread</name>
     <message>
-        <location filename="mailing.py" line="226"/>
+        <location filename="mailing.py" line="227"/>
         <source>IMAP List failed.</source>
         <translation>IMAP List failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="230"/>
+        <location filename="mailing.py" line="231"/>
         <source>IMAP Create failed.</source>
         <translation>IMAP Create failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="255"/>
+        <location filename="mailing.py" line="256"/>
         <source>IMAP Search failed.</source>
         <translation>IMAP Search failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="264"/>
+        <location filename="mailing.py" line="265"/>
         <source>IMAP Peek failed.</source>
         <translation>IMAP Peek failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="283"/>
+        <location filename="mailing.py" line="284"/>
         <source>IMAP Fetch failed.</source>
         <translation>IMAP Fetch failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="289"/>
+        <location filename="mailing.py" line="290"/>
         <source>(Error in address)</source>
         <translation>(Error in address)</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="319"/>
+        <location filename="mailing.py" line="320"/>
         <source>IMAP UID Copy failed.</source>
         <translation>IMAP UID Copy failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="322"/>
+        <location filename="mailing.py" line="323"/>
         <source>IMAP UID Store failed.</source>
         <translation>IMAP UID Store failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="326"/>
+        <location filename="mailing.py" line="327"/>
         <source>IMAP Expunge failed.</source>
         <translation>IMAP Expunge failed.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="362"/>
+        <location filename="mailing.py" line="363"/>
         <source>IMAP settings are incomplete.</source>
         <translation>IMAP settings are incomplete.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="365"/>
+        <location filename="mailing.py" line="366"/>
         <source>The mail password cannot be empty.</source>
         <translation>The mail password cannot be empty.</translation>
     </message>
     <message>
-        <location filename="mailing.py" line="259"/>
+        <location filename="mailing.py" line="260"/>
         <source>Fetching mail:</source>
         <translation>Fetching mail:</translation>
     </message>
@@ -380,17 +399,17 @@
     <message>
         <location filename="mailing.py" line="92"/>
         <source>SMTP settings are incomplete.</source>
-        <translation>SMTP settings are incomplete.</translation>
+        <translation type="obsolete">SMTP settings are incomplete.</translation>
     </message>
     <message>
         <location filename="mailing.py" line="94"/>
         <source>No addressees available</source>
-        <translation>No addressees available</translation>
+        <translation type="obsolete">No addressees available</translation>
     </message>
     <message>
         <location filename="mailing.py" line="96"/>
         <source>Sending</source>
-        <translation>Sending</translation>
+        <translation type="obsolete">Sending</translation>
     </message>
 </context>
 <context>

@@ -12,88 +12,90 @@
 </head>
 <body>
     <h1>mailARS 1.0.3</h1>
-    <h2>Was ist das?</h2>
-    <p>mailARS ist ein Open-Source-Programm für Windows, macOS und Linux,
-        mit dem Studierende während der (typischerweise virtuellen)
-        Lehrveranstaltung Aufgaben erhalten, individuell bearbeiten
-        sowie ihre Arbeit (auch als Foto) zurückschicken können
-        und Lehrende in der Gesamtsicht oder individuell
-        reagieren können. Es ist zur Verwendung parallel zu Videokonferenzsoftware gedacht.
-        Zur Didaktik siehe das <a href="https://www.pedocs.de/frontdoor.php?source_opus=17938">Paper</a>
-        über die vorherige, Browser-basierte Variante.</p>
-    <p>Technisch ist mailARS ein E-Mail-Client, der mit Grafiken statt Text arbeitet.
-        Der Grund für diese Lösung ist die
-        <a href="https://www.bmwi.de/Redaktion/DE/Artikel/Digitale-Welt/europaeische-datenschutzgrundverordnung.html">DSGVO</a>,
-        denn so wird nur die an allen Hochschulen
-        existente Technik für E-Mails benutzt.
-        Insbesondere muss es dafür bereits Verfahrensverzeichnisse,
-        Vorschriften zu Archivierung und Löschung usw. geben. Für den Betrieb von
-        mailARS sollte damit
-        keine weitere organisatorische Arbeit anfallen.</p>
-    <p>Für Meldungen zu Updates beachten Sie bitte:
+    <h2>What is this?</h2>
+    <p>mailARS is an open-sourced application for Windows, macOS, and Linux,
+        that enables sending quizzes and problems
+        to students to individually work on during class
+        (typically a virtual class) und submit their work
+        electronically, possibly as a photo. Teachers can react upon
+        such submissions both individually and to the entire class.
+        mailARS is intended to be used alongside video conferencing software.
+        Concerning the didactivs see the (German) paper
+        <a href="https://www.pedocs.de/frontdoor.php?source_opus=17938">paper</a>
+        aber its browser-based predecessor.</p>
+    <p>Technically speaking, mailARS is an e-mail client 
+        that works with graphics rather than with text.
+        This reason behind this solution is the
+        <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">GDPR</a>,
+        as mailARS only employs an schools's existing e-mail system
+        for which GDPR-conformant regulations and processes
+        are required to already be in place.
+        Hence, the use of mailARS should not require further organisational work.</p>
+    <p>For news about updates please follow:
         <a href="https://j3l7h.de/blog/">https://j3l7h.de/blog/</a></p>
     
     <h2>Installation</h2>
-    <p>mailARS arbeitet mit E-Mail-Servern zusammen, welche die Protokolle
-        SMTP und IMAP benutzen. Falls Ihre Institution andere Protokolle
-        oder eine zusätzliche Authentifizierung verwendet, müssen Sie
-        den Quellcode der Datei mailing.py anpassen bzw. ergänzen.</p>
-    <p>Wollen Sie ein Smartphone oder ein Tablet zum Zeichnen verwenden, sollten Sie jenes
-        als weiteren Bildschirm an den Rechner
-        <a href="https://techwiser.com/use-your-android-as-second-monitor/">anschließen</a>
-        und das jeweilige Zeichenfenster dorthin ziehen. Ebenso sollte sich ein Smartphone
-        als Webcam <a href="https://www.wired.com/story/use-your-phone-as-webcam/">nutzen</a>
-        lassen.</p>
-    <p>mailARS ist in Python geschrieben und benötigt zur Ausführung Python&nbsp;3.7 oder neuer;
-        empfohlen ist mindestens Python&nbsp;3.8. Unter Windows&nbsp;10 können Sie Python
-        aus dem <a href="https://www.microsoft.com/de-de/p/python-38/9mssztt1n39l">Microsoft Store</a>
-        installieren. Unter macOS ist standardmäßig nur Python&nbsp;2.x installiert;
-        das muss
-        <a href="https://www.interglobalmedianetwork.com/blog/2020-05-29-installing-the-latest-version-of-python-on-mac-os-catalina-and-overriding-the-old-default-pre-installed-version/">upgedatet</a>
-        werden. Unter Linux sollte eine aktuelle Version von Python bereits installiert sein.
-        Für andere Betriebssysteme besuchen Sie
+    <p>mailARS works with e-mail servers that employ the protocols
+        SMTP und IMAP. Should you school use different protocols
+        or additional authentification, you need to adapt or augment
+        the source code of the file mailing.py.</p>
+    <p>If you want to use a smartphone or tablet for drawing,
+        you should connect this as an
+        <a href="https://techwiser.com/use-your-android-as-second-monitor/">additional display</a>
+        and drag mailARS's drawing windows there. A samrtphone
+        <a href="https://www.wired.com/story/use-your-phone-as-webcam/">could be used</a>
+        as webcam.</p>
+    <p>mailARS is written in Python and requires Python&nbsp;3.7 or younger
+        for execution;
+        Python&nbsp;3.8 or newer is advisable. On Windows&nbsp;10 you can install Python
+        from the <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l">Microsoft Store</a>.
+        By default, macOS contains only Python&nbsp;2.x;
+        it needs to be
+        <a href="https://www.interglobalmedianetwork.com/blog/2020-05-29-installing-the-latest-version-of-python-on-mac-os-catalina-and-overriding-the-old-default-pre-installed-version/">updated</a>.
+        On Linux an up-to-date version of Python should already be installed.
+        For other operating systems see
         <a href="https://www.python.org/">Python.org</a>.</p>
-    <p>Um zu prüfen, ob Python korrekt installiert ist, öffnen Sie ein Terminalfenster
-        (Windows&nbsp;10: in das Suchfeld <span class="typewriter">cmd</span>
-        eingeben) und tippen dort
-        <span class="typewriter">python⏎</span> ein. Danach sollte sich Python mit
-        seiner Versionsnummer melden.
-        (Ist Python unter Windows&nbsp;10 nicht systemweit installiert,
-        geht dort stattdessen der Microsoft Store auf.)
-        Prüfen Sie die Versionsnummer. Damit es zu keinen Verwirrungen
-        kommt, sollten Sie nur eine Version von Python installiert haben.
-        Verlassen Sie Python dann mit <span class="typewriter">quit()⏎</span>.</p>
-    <p>mailARS benötigt eine Bibliothek für grafische Oberflächen
-        und eine Bibliothek zum
-        Ansprechen der Kamera. Geben Sie deshalb bei laufender Internetverbindung
-        in das Terminalfenster (nicht in Python!) ein:<br>
+    <p>To check whether or not Python is installed correktly,
+        open a terminal window
+        (Windows&nbsp;10: type <span class="typewriter">cmd</span>
+        into the search box) and type
+        <span class="typewriter">python⏎</span> into it. After that, Python should respond
+        with its versions number.
+        (If Python is not installed system-wide on Windows&nbsp;10,
+        the Windows Store will open instead.)
+        Verify the version number. To prevent confusion, only one version of
+        Python should be installed.
+        After that, leave Python by typing <span class="typewriter">quit()⏎</span>.</p>
+    <p>mailARS requires a library for its graphical user interface
+        and a library to access the webcam.
+        Hence, while being connected to the internet,
+        enter into the terminal window (not into Python!):<br>
         <span class="typewriter">pip install pyqt5 opencv-python numpy==1.19.3⏎</span><br>
-        Unter macOS tippen Sie dagegen:<br>
+        On macOS use this instead:<br>
         <span class="typewriter">pip install pyqt5 opencv-python-headless⏎</span><br>
-        (Tipp: Kopieren Sie das aus diesem Text, ohne den Pfeil ⏎.)
-        Wenn danach Warnungen wegen einer alten pip-Version oder wegen nicht eingestellter Pfade erscheinen,
-        können Sie diese normalerweise ignorieren.</p>
-    <p>Sie sollten mailARS als Zip-Archiv erhalten haben, das auch diese Anleitung enthält.
-        Überprüfen Sie dieses Zip-Archiv mit einem Virenscanner, zum Beispiel online mit
+        (Hint: Copy the respective line from this text, without the arrow ⏎.)
+        Typically, you can ignore subsequent warnings concerning an old version of pip
+        or concerning path that are not set.</p>
+    <p>You should have received mailARS as a zip archive,
+        which also contains this user manual.
+        Check this zip arcive with a virus scanning tool, for instance online with
         <a href="https://www.virustotal.com/">VirusTotal</a>.
-        Entpacken Sie das Zip-Archiv (Windows: rechter Mausklick auf das Archiv,
-        Alle extrahieren).
-        mailARS muss Dateien schreiben und kann deshalb nicht aus
-        dem unentpackten Zip-Archiv heraus gestartet werden.</p>
-    <p>Durch einen Doppelklick auf die Datei <span class="typewriter">__main__.py</span>
-        starten Sie mailARS. 
-        Wenn Sie wollen, dass unter Windows nicht zusätzlich zu den grafischen Fenstern
-        ein Terminalfenster aufgeht,
-        können Sie diese Datei in <span class="typewriter">__main__.pyw</span> umbenennen.
-        Um diese Umbennung korrekt vorzunehmen, müssen Sie die Dateierweiterungen
-        <a href="https://support.microsoft.com/de-de/windows/allgemeine-dateierweiterungen-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01">anzeigen</a>
-        lassen – was Sie aus Sicherheitsgründen sowieso immer tun sollten.</p>
-    <p>Wenn auf Ihrem Rechner eine Firewall installiert ist, müssen Sie diese
-        gegebenenfalls so einstellen, dass mailARS die Ports 587 (SMTP) und 993 (IMAP)
-        ansprechen kann.</p>
-    <p>Andere Programme wie GIMP oder Inkscape, die Python verwenden,
-        ändern ggf. dessen Einstellungen, so dass mailARS nicht gleichzeitig mit
-        diesen funktioniert.</p>
+        Unpack the zip archive (Windows: right mouse button, Extract All).
+        mailARS needs to write files into its folder; hence, it cannot be launched
+        from the compressed zip archive.</p>
+    <p>You lauch mailARS by double clicking the file
+        <span class="typewriter">__main__.py</span>. 
+        On Windows: To prevent a terminal window opening in addition to the graphical
+        user interface, you can rename this file to
+        <span class="typewriter">__main__.pyw</span>.
+        To perform this renaming correctly, you have to set Windows
+        to display filename extensions
+        <a href="https://support.microsoft.com/en-us/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01">anzeigen</a>;
+        for security reasons, you should do this anyway at all times.</p>
+    <p>If a firewall is installed on your computer, you may need to configure it
+        such that, mailARS can access the ports 587 (SMTP) and 993 (IMAP).</p>
+    <p>Other software such as GIMP or Inkscape that uses Python
+        may change its settings, so that mailARS can not be run in parallel to those.</p>
 
     <h2>Einstellungen</h2>
     <p>Bei jedem Start fragt mailARS nach dem E-Mail-Passwort. Aus Sicherheitsgründen
