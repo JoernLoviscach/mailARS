@@ -87,13 +87,14 @@ class _SenderRunnable(core.QRunnable):
             pass
 
         server: typing.Optional[smtplib.SMTP] = None
+        app = widgets.QApplication.instance()
         try:
             if self._name == "" or self._smtp_sender == "" or self._password == "":
-                raise RuntimeError(self.tr("SMTP settings are incomplete."))
+                raise RuntimeError(app.translate("Sender", "SMTP settings are incomplete."))
             if len(self._addresses) == 0:
-                raise RuntimeError(self.tr("No addressees available"))
+                raise RuntimeError(app.translate("Sender", "No addressees available"))
 
-            _sender_signals.status_updated.emit(self.tr("Sending"))
+            _sender_signals.status_updated.emit(app.translate("Sender", "Sending"))
 
             text, files = graphics.serialize(self._elements)
 
