@@ -1,3 +1,5 @@
+![Screenshot of mailARS](images/screenshot.png "Screenshot of mailARS")
+
 *Für die deutsche Version bitte hinunterscrollen*
 
 # What is mailARS?

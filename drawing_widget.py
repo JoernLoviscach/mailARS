@@ -22,6 +22,7 @@ import PyQt5.QtWidgets as widgets
 import PyQt5.QtGui as gui
 from enum import IntEnum
 import math
+import os
 import graphics
 import drag_button
 import text_editor
@@ -70,21 +71,21 @@ class DrawingWidget(widgets.QWidget):
 
         button_move = drag_button.DragButton(self, self._move_function)
         button_move.setToolTip("Bewegen")
-        button_move.setIcon(gui.QIcon("move.png"))
+        button_move.setIcon(gui.QIcon(os.path.join("images", "move.png")))
         button_move.setIconSize(core.QSize(24, 24))
         layout_on_selection.addWidget(button_move)
 
         button_scale = drag_button.DragButton(self, self._scale_function)
         button_scale.setToolTip("Skalieren")
-        button_scale.setIcon(gui.QIcon("scale.png"))
+        button_scale.setIcon(gui.QIcon(os.path.join("images", "scale.png")))
         button_scale.setIconSize(core.QSize(24, 24))
         layout_on_selection.addWidget(button_scale)
         
         # TODO: turn into class variables
-        self._cursor_drawing = gui.QCursor(gui.QBitmap("cursor_drawing_b.png"), gui.QBitmap("cursor_drawing_m.png"), 0, 0)
-        self._cursor_erasing = gui.QCursor(gui.QBitmap("cursor_erasing_b.png"), gui.QBitmap("cursor_erasing_m.png"), 0, 0)
-        self._cursor_typing = gui.QCursor(gui.QBitmap("cursor_typing_b.png"), gui.QBitmap("cursor_typing_m.png"), 15, 15)
-        self._cursor_selecting = gui.QCursor(gui.QBitmap("cursor_selecting_b.png"), gui.QBitmap("cursor_selecting_m.png"), 15, 15)
+        self._cursor_drawing = gui.QCursor(gui.QBitmap(os.path.join("images", "cursor_drawing_b.png")), gui.QBitmap(os.path.join("images", "cursor_drawing_m.png")), 0, 0)
+        self._cursor_erasing = gui.QCursor(gui.QBitmap(os.path.join("images", "cursor_erasing_b.png")), gui.QBitmap(os.path.join("images", "cursor_erasing_m.png")), 0, 0)
+        self._cursor_typing = gui.QCursor(gui.QBitmap(os.path.join("images", "cursor_typing_b.png")), gui.QBitmap(os.path.join("images", "cursor_typing_m.png")), 15, 15)
+        self._cursor_selecting = gui.QCursor(gui.QBitmap(os.path.join("images", "cursor_selecting_b.png")), gui.QBitmap(os.path.join("images", "cursor_selecting_m.png")), 15, 15)
 
     def set_cursor(self, mode: Mode) -> None:
         if mode == Mode.DRAWING:

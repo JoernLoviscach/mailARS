@@ -1,294 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mailARS: Anleitung</title>
+    <title>mailARS: User Manual</title>
     <style>
-        body { font-family: Georgia, serif; }
-        .typewriter { font-family: Consolas, monospace; }
-        img { width: 16px; height: 16px; }
+        body {
+            font-family: Georgia, serif;
+        }
+
+        .typewriter {
+            font-family: Consolas, monospace;
+        }
+
+        img {
+            width: 16px;
+            height: 16px;
+        }
     </style>
 </head>
-<body>
-    <h1>mailARS 1.0.3</h1>
-    <h2>What is this?</h2>
-    <p>mailARS is an open-sourced application for Windows, macOS, and Linux,
-        that enables sending quizzes and problems
-        to students to individually work on during class
-        (typically a virtual class) und submit their work
-        electronically, possibly as a photo. Teachers can react upon
-        such submissions both individually and to the entire class.
-        mailARS is intended to be used alongside video conferencing software.
-        Concerning the didactivs see the (German) paper
-        <a href="https://www.pedocs.de/frontdoor.php?source_opus=17938">paper</a>
-        aber its browser-based predecessor.</p>
-    <p>Technically speaking, mailARS is an e-mail client 
-        that works with graphics rather than with text.
-        This reason behind this solution is the
-        <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">GDPR</a>,
-        as mailARS only employs an schools's existing e-mail system
-        for which GDPR-conformant regulations and processes
-        are required to already be in place.
-        Hence, the use of mailARS should not require further organisational work.</p>
-    <p>For news about updates please follow:
-        <a href="https://j3l7h.de/blog/">https://j3l7h.de/blog/</a></p>
-    
-    <h2>Installation</h2>
-    <p>mailARS works with e-mail servers that employ the protocols
-        SMTP und IMAP. Should you school use different protocols
-        or additional authentification, you need to adapt or augment
-        the source code of the file mailing.py.</p>
-    <p>If you want to use a smartphone or tablet for drawing,
-        you should connect this as an
-        <a href="https://techwiser.com/use-your-android-as-second-monitor/">additional display</a>
-        and drag mailARS's drawing windows there. A samrtphone
-        <a href="https://www.wired.com/story/use-your-phone-as-webcam/">could be used</a>
-        as webcam.</p>
-    <p>mailARS is written in Python and requires Python&nbsp;3.7 or younger
-        for execution;
-        Python&nbsp;3.8 or newer is advisable. On Windows&nbsp;10 you can install Python
-        from the <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l">Microsoft Store</a>.
-        By default, macOS contains only Python&nbsp;2.x;
-        it needs to be
-        <a href="https://www.interglobalmedianetwork.com/blog/2020-05-29-installing-the-latest-version-of-python-on-mac-os-catalina-and-overriding-the-old-default-pre-installed-version/">updated</a>.
-        On Linux an up-to-date version of Python should already be installed.
-        For other operating systems see
-        <a href="https://www.python.org/">Python.org</a>.</p>
-    <p>To check whether or not Python is installed correktly,
-        open a terminal window
-        (Windows&nbsp;10: type <span class="typewriter">cmd</span>
-        into the search box) and type
-        <span class="typewriter">python⏎</span> into it. After that, Python should respond
-        with its versions number.
-        (If Python is not installed system-wide on Windows&nbsp;10,
-        the Windows Store will open instead.)
-        Verify the version number. To prevent confusion, only one version of
-        Python should be installed.
-        After that, leave Python by typing <span class="typewriter">quit()⏎</span>.</p>
-    <p>mailARS requires a library for its graphical user interface
-        and a library to access the webcam.
-        Hence, while being connected to the internet,
-        enter into the terminal window (not into Python!):<br>
-        <span class="typewriter">pip install pyqt5 opencv-python numpy==1.19.3⏎</span><br>
-        On macOS use this instead:<br>
-        <span class="typewriter">pip install pyqt5 opencv-python-headless⏎</span><br>
-        (Hint: Copy the respective line from this text, without the arrow ⏎.)
-        Typically, you can ignore subsequent warnings concerning an old version of pip
-        or concerning path that are not set.</p>
-    <p>You should have received mailARS as a zip archive,
-        which also contains this user manual.
-        Check this zip arcive with a virus scanning tool, for instance online with
-        <a href="https://www.virustotal.com/">VirusTotal</a>.
-        Unpack the zip archive (Windows: right mouse button, Extract All).
-        mailARS needs to write files into its folder; hence, it cannot be launched
-        from the compressed zip archive.</p>
-    <p>You lauch mailARS by double clicking the file
-        <span class="typewriter">__main__.py</span>. 
-        On Windows: To prevent a terminal window opening in addition to the graphical
-        user interface, you can rename this file to
-        <span class="typewriter">__main__.pyw</span>.
-        To perform this renaming correctly, you have to set Windows
-        to display filename extensions
-        <a href="https://support.microsoft.com/en-us/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01">anzeigen</a>;
-        for security reasons, you should do this anyway at all times.</p>
-    <p>If a firewall is installed on your computer, you may need to configure it
-        such that, mailARS can access the ports 587 (SMTP) and 993 (IMAP).</p>
-    <p>Other software such as GIMP or Inkscape that uses Python
-        may change its settings, so that mailARS can not be run in parallel to those.</p>
 
-    <h2>Einstellungen</h2>
-    <p>Bei jedem Start fragt mailARS nach dem E-Mail-Passwort. Aus Sicherheitsgründen
-        speichert es das nicht mit den übrigen Einstellungen.</p>
-    <p>Um die übrigen Einstellungen von mailARS dauerhaft vorzunehmen,
-        klicken Sie im Hauptfenster auf <img src="settings.png" alt="Einstellungen">.
-        In dem dann erscheinenden Dialogfenster geben Sie Folgendes ein
-        (falls es nicht schon vorab eingetragen ist):</p>
+<body>
+
+    <h1>mailARS 1.0.4</h1>
+
+    <h2>What’s this?</h2>
+    <p>mailARS is an open-sourced application for Windows, macOS, and Linux,
+        that enables sending quizzes and problems to students to individually
+        work on during class (typically a virtual class) und submit their work
+        electronically, possibly as a photo. Teachers can react upon such
+        submissions both individually and to the entire class. mailARS is
+        intended to be used alongside video conferencing software. Concerning
+        the didactics, see the (German) <a
+            href="https://www.pedocs.de/frontdoor.php?source_opus=17938">paper</a>
+        on its browser-based predecessor.</p>
+    <p>Technically speaking, mailARS is an e-mail client that works with
+        graphics rather than with text. This reason behind this solution is the
+        <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">GDPR</a>, as
+        mailARS only employs a school’s existing e-mail system, for which
+        GDPR-conformant regulations and processes are required to already be in
+        place. Hence, the use of mailARS should not require further
+        organizational work.</p>
+    <p>For news about updates please follow: <a
+            href="https://j3l7h.de/blog/">https://j3l7h.de/blog/</a></p>
+
+    <h2>Installation</h2>
+    <p>mailARS works with e-mail servers that employ the protocols SMTP und
+        IMAP. Should your school use different protocols or additional
+        authentication, you need to adapt or augment the source code contained
+        in the file mailing.py.</p>
+    <p>If you want to use a smartphone or tablet for drawing, you should connect
+        this as an <a
+            href="https://techwiser.com/use-your-android-as-second-monitor/">additional
+            display</a> and drag mailARS’s drawing windows there. A smartphone
+        <a href="https://www.wired.com/story/use-your-phone-as-webcam/">could be
+            used</a> as webcam.</p>
+    <p>mailARS is written in Python and requires Python&nbsp;3.7 or younger for
+        execution; Python&nbsp;3.8 or newer is advisable. On Windows&nbsp;10,
+        you can install Python from the <a
+            href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l">Microsoft
+            Store</a>. By default, macOS contains only Python&nbsp;2.x; it needs
+        to be <a
+            href="https://www.interglobalmedianetwork.com/blog/2020-05-29-installing-the-latest-version-of-python-on-mac-os-catalina-and-overriding-the-old-default-pre-installed-version/">updated</a>.
+        On Linux, an up-to-date version of Python should already be installed.
+        For other operating systems see <a
+            href="https://www.python.org/">Python.org</a>.</p>
+    <p>To check whether or not Python is installed correctly, open a terminal
+        window (Windows&nbsp;10: type <span class="typewriter">cmd</span> into
+        the search box) and type <span class="typewriter">python⏎</span> into
+        it. After that, Python should respond with its versions number. (If
+        Python is not installed system-wide on Windows&nbsp;10, the Windows
+        Store will open instead.) Verify the version number. To prevent
+        confusion, only one version of Python should be installed. After that,
+        leave Python by typing <span class="typewriter">quit()⏎</span>.</p>
+    <p>mailARS requires a library for its graphical user interface and a library
+        to access the webcam. Hence, while being connected to the internet,
+        enter the following into the above-mentioned terminal window (not into
+        Python!):<br>
+        <span class="typewriter">pip install pyqt5 opencv-python
+            numpy==1.19.3⏎</span><br> On macOS, use this instead:<br>
+        <span class="typewriter">pip install pyqt5
+            opencv-python-headless⏎</span><br> (Hint: Copy the respective line
+        from this text, without the arrow ⏎.) Typically, you can ignore
+        subsequent warnings concerning an old version of pip or concerning paths
+        that are not set.
+    </p>
+    <p>You should have received mailARS as a zip archive, which also contains
+        this user manual. Check this zip archive with a virus scanning tool, for
+        instance online with <a
+            href="https://www.virustotal.com/">VirusTotal</a>. Unpack the zip
+        archive (Windows: right mouse button, Extract All). mailARS needs to
+        write files into its folder; hence, it cannot be launched from the
+        compressed zip archive.</p>
+    <p>You launch mailARS by double clicking the file <span
+            class="typewriter">__main__.py</span>. On Windows: To prevent a
+        terminal window opening in addition to the graphical user interface, you
+        can rename this file to <span class="typewriter">__main__.pyw</span>. To
+        perform this renaming correctly, you have to set Windows to <a
+            href="https://support.microsoft.com/en-us/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01">display</a>
+        filename extensions; for security reasons, you should anyway have
+        Windows display the extensions at all times. </p>
+    <p>If a firewall is installed on your computer, you may need to configure it
+        in such a manner that mailARS can access the ports 587 (SMTP) and 993
+        (IMAP).</p>
+    <p>Other software such as GIMP or Inkscape that uses Python may momentarily
+        change Python’s settings so that mailARS cannot be run in parallel to
+        those.</p>
+
+    <h2>Settings</h2>
+    <p>On every launch, mailARS asks for the e-mail password. For security
+        reasons the password is not stored along with the other settings.</p>
+    <p>To adjust and save the remaining settings of mailARS click onto <img
+            src="images/settings.png" alt="Settings"> in its main window. Enter
+        the following (if it’s not already present) into the dialog that appears
+        afterwards:</p>
     <ul>
-        <li>Sprache: in welcher Sprache die Bedienoberfläche erscheinen soll;
-            wird beim nächsten Start des Programms angewendet.</li>
-        <li>Name zum Anzeigen: der (Phantasie?-)Name, unter dem Sie erscheinen wollen.
-            Wenn Sie dieses Feld leer lassen,
-            wird beim nächsten Start dafür eine Zufallszahl erzeugt.</li>
-        <li>SMTP-Absender: Ihre E-Mail-Adresse zum Versenden von Mails</li>
-        <li>IMAP-User: Ihr Benutzername zum Abholen von Mails,
-            wahrscheinlich identisch mit Ihrer E-Mail-Adresse aus der Zeile davor</li>
-        <li>SMTP-Empfänger: die E-Mail-Adresse Ihrer/Ihres Lehrenden;
-            Lehrende lassen dieses Feld leer.</li>
-        <li>SMTP-Server: die Adresse des Servers Ihrer Hochschule zum Versand von Mails</li>
-        <li>IMAP-Server: die Adresse des Servers Ihrer Hochschule zum Abholen von Mails</li>
-        <li>Kurven nach der Eingabe glätten: Dies schalten Sie im Normalfall an,
-            es sei denn, Sie benutzen ein Tablet mit aktivem Stift.</li>
+        <li>Language: the language of user interface; changes are applied from
+            the next launch of mailARS on.</li>
+        <li>Name to be displayed: a name or a pseudonym to be shown to
+            recipients; if you leave this field empty, it will be filled with a
+            random number during the next launch of mailARS</li>
+        <li>SMTP sender: your e-mail address for sending mail</li>
+        <li>IMAP user: your user name for fetching mail, possibly identical to
+            your e-mail address on the previous line </li>
+        <li>SMTP receiver: the e-mail address of your teacher; teachers leave
+            this field empty</li>
+        <li>SMTP server: the address of your school’s server for sending mail
+        </li>
+        <li>IMAP server: the address of your school’s server for fetching mail
+        </li>
+        <li>Smooth curves after drawing: typically, you want to switch this on,
+            unless you are using a graphics tablet with an active stylus.</li>
     </ul>
 
-    <h2>Bedienung: Grundfunktionen</h2>
-    <p>Das Hauptfenster von mailARS zeigt die drei Postfächer (Empfangen, Entwürfe, Gesendet).
-        Wenn man dieses Hauptfenster schließt (aber nicht, wenn man es nur verbirgt),
-        beendet sich mailARS.</p>
-    <p>Nach einem Klick auf <img src="fetch.png" alt="Mails holen"> holt
-        mailARS Mails vom Server. Dieser Knopf ist rot gefärbt
-        <img src="need_to_fetch.png" alt="Mails holen (in Rot)">, wenn
-        seit etwa einer Minute auf dem Server Mails vorhanden sind. Probleme beim Abholen
-        der Mails (typischerweise Vertipper im Passwort) werden unten in der Statusleiste
-        dieses Fensters gemeldet, samt der jeweiligen Uhrzeit.</p>
-    <p>Um den Überblick zu behalten, sollten Lehrende die Funktion
-        <img src="group_by_sender.png" alt="Nur letzte empfangene Mail jeder Person zeigen">
-        einschalten, mit im Posteingang nur die von jeder Person jeweils letzte
-        Mail gezeigt wird.</p>
-    <p>Wie groß die Vorschaubildchen in den Postfächern erscheinen
-        (genauer: wie viele Spalten davon gebildet werden, wenn es genügend viele sind),
-        stellt man mit dem Schieberegler ein, der bei Klick auf
-        <img src="columns.png" alt="Zahl an Spalten"> erscheint.</p>
-    <p>Hält man die Maus über eines der Vorschaubildchen in einem der drei Postfächer,
-        erscheinen die Namen des Absenders bzw. der Adressaten
-        sowie der Zeitstempel der Mail bzw. der Erstellungszeitpunkt des Entwurfs.
-        Nach einem Klick auf <img src="export_to_pdf.png" alt="PDF-Export"> werden alle Mails
-        des jeweiligen Postfachs als Seiten einer PDF-Datei in das Unterverzeichnis
-        <span class="typewriter">export</span> von mailARS exportiert. Sollen nur einige
-        Mails so exportiert werden, kann man diese mit den Checkboxen oben links
-        im jeweiligen Vorschaubildchen auswählen. Um mehrere auszuwählen,
-        ist dabei die Umschalttaste (Shift)
-        zu drücken.</p>
-    <p>Eine neue Mail entsteht durch Klick auf <img src="new.png" alt="Neuer Entwurf">.
-        Dann und ebenso, wenn man eine Vorschau in einem der drei Postfächer anklickt,
-        öffnet sich das Zeichenfenster von mailARS zum Bearbeiten der betreffenden Mail.
-        Es können viele Zeichenfenster gleichzeitig offen sein.</p>
-    <p>Zum Abschicken einer Mail klicken Sie im Zeichenfenster auf 
-        <img src="send.png" alt="Senden">. Etwaige Fehler (typischerweise
-        ein falsch eingegebenes Passwort) erscheinen in der Statusleiste des
-        Hauptfensters. Der Knopf zum Senden ist rot gefärbt
-        <img src="need_to_send.png" alt="Senden (in Rot)">, wenn Sie im Zeichenfenster
-        an der Mail gearbeitet haben. Sie können das Fenster auch offen lassen,
-        weiter an der Mail arbeiten und diese immer wieder versenden.</p>
-    <p>Wenn Sie eine Mail verändert haben und das Zeichenfenster schließen,
-        ohne die Mail gesendet zu haben, landet sie im Postfach für Entwürfe.
-        Genauer gesagt, wird von jeder Mail, die kein Entwurf ist,
-        im Postfach für Entwürfe zeitweise eine Kopie angelegt.
-        Wenn Sie die Mail nicht editieren, wird diese Kopie wieder gelöscht.</p>
-    <p>Vor dem Absenden können Sie kontrollieren und verändern,
-        an welche Adressaten die Mail geschickt wird;
-        dazu klicken Sie auf <img src="addressees.png" alt="Adressaten">.</p>
-    <p>Damit Ihr Postfach nicht mit Mails überflutet wird, legt mailARS
-        dort einen Ordner namens mailARS an und verschiebt alle Mails mit
-        seinem Betreff <span class="typewriter">mailARS, not intended for reading</span>
-        dorthin. Sicherheitshalber werden diese Mails nicht
-        einfach gelöscht. Mit Hilfe Ihres üblichen E-Mail-Programms sollten Sie
-        diesen Ordner gelegentlich auf Irrläufer überprüfen
-        und ihn leeren. Etwa in Thunderbird müssen sie dazu diesen
-        – sonst unsichtbar bleibenden – Ordner
-        abonnieren (rechter Mausklick auf den Titel des Mail-Kontos
-        in der Liste am linken Bildschirmrand). Wenn Sie
-        eine automatische Weiterleitung vom Mail-Server der Hochschule
-        auf einen eigenen Server eingerichtet haben,
-        hilft das automatische Verschieben nicht; greifen Sie lieber direkt
-        auf den Mail-Server der Hochschule zu – am besten mit einem
-        Mail-Programm wie <a href="https://www.thunderbird.net/de/">Thunderbird</a>,
-        das mehrere Konten parallel verwalten kann.</p>
-
-    <h2>Bedienung: Zeichenfunktionen</h2>
-        <p>Mit <img src="draw.png" alt="Zeichnen"> wählen Sie das Zeichenwerkzeug
-            <img src="cursor_drawing_b.png" alt="Zeichenwerkzeug">.
-            Bei Klick auf <img src="color.png" alt="Farbe"> öffnet sich ein Dialog zur
-            Auswahl einer Farbe, bei Klick auf <img src="stroke_thickness.png" alt="Dicke">
-            ein Schieberegler zur Einstellung der Strichstärke. Beide Einstellungen
-            sieht man dauerhaft daneben in einer kleinen Vorschau.
-            Mit <img src="erase.png" alt="Radieren"> wählen Sie das Radierwerkzeug
-            <img src="cursor_erasing_b.png" alt="Radierwerkzeug">.
-            Es wirkt nur auf Striche und löscht diese jeweils komplett.
-            Mit der rechten Maustaste
-            oder dem oberen Ende eines entsprechenden aktiven Stifts
-            oder mit der als rechter Maustaste konfigurierten Taste eines Stifts
-            können Sie beim Zeichnen radieren, ohne das Werkzeug umschalten
-            zu müssen.</p>
-        <p>Mit <img src="text.png" alt="Tippen"> wählen Sie das Textwerkzeug
-            <img src="cursor_typing_b.png" alt="Textwerkzeug">.
-            Ziehen Sie damit einen Rahmen auf und tippen/editieren Sie darin
-            Text wie gewohnt. Mindestens unter Windows funktioniert hier auch
-            die Unterstützung für alternative Texteingabesysteme wie Pinyin.
-            Um den Kasten zu ändern, in dem ein Text erscheint, ziehen Sie
-            mit dem Textwerkzeug dessen Ränder. Die Größe der Schriftart stellen sie
-            mit dem Schieberegler unter <img src="font_size.png" alt="Größe"> ein.
-            Um einen existierenden Text zu editieren, klicken Sie mit dem
-            Textwerkzeug auf diesen. Sie können dann auch dessen Rahmen ziehen.</p>
-        <p>Durch Klick auf <img src="photo.png" alt="Foto"> öffnen Sie
-            ein Vorschaufenster, um ein
-            Foto zu machen, das dann in die Zeichnung eingefügt wird.
-            (Dazu muss erstens eine Kamera verfügbar sein und zweitens
-            darf diese nicht schon für die Videokonferenz verwendet werden.)
-            Das Kamerabild wird auf maximalen
-            Kontrast optimiert, um Schrift und Zeichnungen auf Papier auch bei mäßiger Beleuchtung
-            lesbar abzubilden. Die Vorschau ist spiegelverkehrt, damit Sie leichter das Papier
-            vor der Kamera ausrichten können.</p>
-        <p>Mit <img src="select.png" alt="Selektieren"> erhalten Sie das Auswahlwerkzeug
-            <img src="cursor_selecting_b.png" alt="Auswahlwerkzeug">.
-            Durch Anklicken oder Aufziehen eines Rechtecks damit selektieren Sie Objekte
-            in der Zeichnung. Wenn Sie dabei die Umschalttaste (Shift) drücken, wird die
-            bisherige Selektion um die neu gewählten Objekte erweitert;
-            mit der Steuerung-Taste (Strg, Ctrl) werden die neu gewählten Objekte
-            aus der bisherigen Selektion entfernt.</p>
-        <p>Über der Mitte der Auswahl erscheinen die Icons
-            <img src="move.png" alt="Bewegen"> und <img src="scale.png" alt="Skalieren">.
-            Indem man diese zieht, werden die ausgewählten Objekte verschoben oder
-            verkleinert bzw. vergrößert. Sind Objekte ausgewählt,
-            wirken Änderungen von Strichstärke, Strichfarbe
-            und Schriftgröße auf alle davon. Mit <img src="delete.png" alt="Löschen">
-            löscht man die ausgewählten Objekte oder – falls keine ausgewählt sind –
-            alle Objekte.</p>
-        <p>Die Undo/Redo-Funktionen sind <img src="undo.png" alt="Rückgängig">
-            und <img src="redo.png" alt="Wiederherstellen">. Beim Editieren
-            eines Textes funktionieren stattdessen Strg+Z und Strg+Y.</p>
-        <p>Durch Klick auf die Taste P lässt sich die Werkzeugleiste ausblenden
-            und wieder einblenden,
-            um Platz auf dem Bildschirm zu sparen, das Bild optisch zu entschlacken
-            und unmöglich zu machen, dass man das Fenster versehentlich verschiebt.
-            Alle Funktionen sind mit den Tastaturkürzeln erreichbar, die in den
-            Tooltipps des jeweiligen Knopfs erscheinen.
-            Achten Sie bei der Tastaturbedienung darauf, dass das Zeichenfenster
-            auch das aktive Fenster ist und die Tastendrücke nicht versehentlich an ein anderes
-            gehen, etwa den Browser.
-            Bei ausgeblendeter Werkzeugleiste muss der Modus zur Textbearbeitung
-            mit dem X unten rechts am Textkasten verlassen werden.
-            Die Tasten 1 bis 6 sind mit Farben belegt.</p>
-
-    <h2>Hinweise für Lehrende</h2>
-    <p>Um mailARS an die Studierenden weiterzugeben, empfiehlt sich</p>
-    <ol>
-        <li>eine Kopie des Verzeichnisses von mailARS anzulegen,</li>
-        <li>mailARS dort zu starten,</li>
-        <li>den Anzeige-Namen zu löschen, so dass für ihn beim
-            nächsten Start eine Zufallszahl generiert wird,</li>
-        <li>die Mail-Einstellungen – so weit möglich – aus
-            Studierendensicht vorzunehmen,</li>
-        <li>die Fenster recht klein und nach links oben zu ziehen und
-            (wenn Sie mehrere Monitore nutzen)
-            auf den primären Monitor zu schieben,
-            denn auch die Fensterpositionen werden gespeichert,</li>
-        <li>mailARS dann zu verlassen,</li>
-        <li>die (sämtlich automatisch angelegten) Ordner
-            im Verzeichnis von mailARS zu löschen (Datenschutz!) und</li>
-        <li>jenes Verzeichnis dann zu zippen
-            (Windows: rechter Mausklick, Senden an Zip-komprimierter Ordner).</li>
-    </ol>
-    <p>Eine Alternative zum Verteilen nur des Python-Codes besteht darin,
-        eine komplett vorbereitete und ggf. sogar
-        installationsfreie Python-Umgebung bereitzustellen, zum Beispiel mit
-        <a href="https://sourceforge.net/projects/winpython/files/WinPython_3.7/3.7.4.1/WinPython64-3.7.4.1Zero.exe">WinPython Zero</a>.</p>
-    <p>Bitten Sie die Studierenden, Ihnen am Anfang des Semesters
-        ein leeres Bild zu schicken. So erfährt Ihr mailARS die Adressen,
-        damit Sie dann Aufgaben an alle schicken können.</p>
-    <p>Öffnen Sie zu Beginn der Sitzung sofort ein neues Zeichenfenster und verwenden sie dies
-        als Tafel für alles Weitere.
-        Wenn Sie mit einem einzigen Bildschirm arbeiten, sollten
-        Sie nur dieses Fenster, aber nicht den gesamten Bildschirm
-        per Screensharing in Ihrer Videokonferenzsoftware teilen.
-        Wenn Sie dagegen mit zwei Bildschirmen arbeiten, können Sie dieses
-        Fenster den einen Bildschirm füllen lassen (den Sie dann per Screensharing
-        teilen)
-        und alle anderen Fenster von mailARS (einschließlich weiterer Zeichenfenster) auf den
-        anderen Bildschirm schieben. Weil mailARS jedes weitere Zeichenfenster an der Stelle
-        und der Größe öffnet, zu der / auf die zuletzt ein Fenster gezogen worden ist,
-        genügt es, nur ein Zeichenfenster auf den zweiten Bildschirm zu schieben.
-        Alle weiteren erscheinen dann dort.
+    <h2>Basic functions</h2>
+    <p>The main window of mailARS shows the mail boxes (Inbox, Drafts, Outbox).
+        To quit the program, close that window (not simply minimizing it).</p>
+    <p>Click <img src="images/fetch.png" alt="Fetch mail"> to fetch mail from
+        the server. This button is colored red <img
+            src="images/need_to_fetch.png" alt="Fetch mail (in red)"> when new
+        mails have been available on the server for about one minute. Should
+        there be a problem when fetching mail (typically a typo in the
+        password), a time-stamped notification will appear on the status bar at
+        the bottom of that window.</p>
+    <p>To limit the number of thumbnails, teachers should switch on <img
+            src="images/group_by_sender.png"
+            alt="Only show latest mail of every sender"> so that the inbox only
+        shows the latest mail of every sender. The size of the thumbnail
+        previews in the mailboxes (or rather; how many columns are formed at
+        maximum), can be controlled through the slider that appears after a
+        click on <img src="images/columns.png" alt="Number of columns">.</p>
+    <p>If you let the mouse hover above one of the thumbnail previews in one of
+        the three mailboxes, a tooltip will appear that displays the names of
+        the addressees and the time stamp of the mail or the time of creation of
+        a draft. A click on <img src="images/export_to_pdf.png"
+            alt="PDF export"> initiates the PDF export of all mails of the
+        currently visible mailbox as pages of a PDF file stored in the mailARS
+        subdirectory <span class="typewriter">export</span>. In case you want to
+        export only some of the mails, you can select those beforehand with help
+        of the checkboxes at the left top of the thumbnails. To select more than
+        one, press the Shift key while clicking.</p>
+    <p>You can create a new mail by clicking on <img src="images/new.png"
+            alt="New draft">. Afterwards and also if you click on a thumbnail in
+        one of the three mailboxes, mailARS opens a drawing window for editing.
+        A number of different drawing windows can be open at the same time.</p>
+    <p>To send a mail, you click on <img src="images/send.png" alt="Send"> in
+        the drawing window. Should there be a problem when sending the mail
+        (typically a typo in the password), a time-stamped notification will
+        appear on the status bar at the bottom of the main (!) window.</p>
+    <p>You can keep the drawing window open, continue working in it and send the
+        current state from time to time. The Send button is colored red <img
+            src="images/need_to_send.png" alt="Send (in red)"> if you have
+        edited the mail in the drawing window. If you have edited a mail and
+        close the drawing window without having sent the mail, it is stored in
+        the Drafts mailbox. To be precise, when opening a mail, mailARS creates
+        a temporary draft copy unless that mail is already a draft; if you do
+        not edit the draft copy, it will be removed again after the drawing
+        window has been closed.</p>
+    <p>Before sending a mail you can check and edit its list of addressees. To
+        this end, click on <img src="images/addressees.png" alt="Addressees">.
     </p>
+    <p>To prevent flooding your general IMAP inbox, which is also visible in the
+        regular e-mail client program that you have been using all along,
+        mailARS creates a folder called mailARS in the IMAP inbox and moves all
+        mails with subject line <span class="typewriter">mailARS, not intended
+            for reading</span> into this folder. For safety reasons, these mails
+        are not deleted automatically. From time to time, you should use your
+        regular e-mail client program to check this folder for stray messages
+        and to delete all messages in it. In Thunderbird, for instance, you have
+        to subscribe to that – otherwise invisible – folder (right mouse click
+        on the title of the mail account in the list at the left border of the
+        screen). Should you have set up automatic mail forwarding from the
+        school’s mail server to a different server, mailARS’s automatic moving
+        of mails does not help; anyway, it is better to access the school’s mail
+        server directly, for instance through an e-mail client such as <a
+            href="https://www.thunderbird.net/">Thunderbird</a>, which can
+        handle mail accounts on different servers in parallel.</p>
+
+    <h2>Drawing functions</h2>
+    <p>Click on <img src="images/draw.png" alt="Drawing"> for the drawing tool
+        <img src="images/cursor_drawing_b.png" alt="Drawing tool">. Click on
+        <img src="images/color.png" alt="Color"> to open the color picker dialog
+        or on <img src="images/stroke_thickness.png" alt="Thickness"> to set the
+        stroke thickness using a slider. A preview next to both buttons shows
+        the effect of these two settings. Click <img src="images/erase.png"
+            alt="Erase"> for the eraser <img src="images/cursor_erasing_b.png"
+            alt="Eraser">. It removes entire pen strokes and leaves texts and
+        pictures untouched. You can momentarily switch from drawing to erasing
+        by pressing the right mouse button or by using the inverted end of an
+        active stylus (if it supports this) or by pressing the stylus’ button
+        that is configured to act as right mouse button.</p>
+    <p>Click on <img src="images/text.png" alt="Typing"> to select the text tool
+        <img src="images/cursor_typing_b.png" alt="Text tool">. Use this tool to
+        create a rectangular frame; afterwards, you can type and edit text in
+        this frame as usual. At least on Windows you can use the operating
+        system’s support for alternative text input such as Pinyin. To change
+        the position and/or the size of the frame, apply the text tool drag its
+        borders. To adjust the font size, click on <img
+            src="images/font_size.png" alt="Size"> and set the slider that
+        appears afterwards. To edit exiting text, use the text tool to click on
+        it.</p>
+    <p>To take a photo with the webcam, click on <img src="images/photo.png"
+            alt="Photo">. Afterwards, mailARS opens a window with a live preview
+        of the camera, allowing you to cancel this operation or to insert the
+        current picture into the drawing. The preview is mirrored so that you
+        can more easily adjust the paper in front of the webcam. The image
+        delivered by the webcam is optimized for maximum contrast so that
+        drawings and handwritten text are captured well even under poor lighting
+        conditions. Note that a webcam has to be connected and must not
+        currently be in use. Hence, you have to temporarily pause the webcam in
+        video conferencing software that runs in parallel to mailARS.</p>
+    <p>Click on <img src="images/select.png" alt="Select"> for the selection
+        tool <img src="images/cursor_selecting_b.png" alt="Selection tool">. Use
+        this tool to select one object or several objects by clicking onto an
+        individual object or by drawing a rectangle that encloses or intersects
+        a number of objects. If you press the Shift key while releasing the
+        mouse button, the former selection is extended to include the current
+        objects; if you press the Control key, the current objects are removed
+        from the former selection.</p>
+    <p>mailARS displays two handles in the middle of the selection: <img
+            src="images/move.png" alt="Move"> und <img src="images/scale.png"
+            alt="Scale">. By dragging one of these, you control the position and
+        the size of the selected objects. Changes of stroke width, stroke color,
+        and font size are applied to all currently selected objects. By clicking
+        on <img src="images/delete.png" alt="Deleted"> you delete all currently
+        selected objects or – should none have been selected – all objects.</p>
+    <p>Undo and redo are invoked by clicking on <img src="images/undo.png"
+            alt="Undo"> and <img src="images/redo.png" alt="Redo">. While
+        editing text, use the key combinations Ctrl+Z and Ctrl+Y instead.</p>
+    <p>By pressing the P key you can hide and show the toolbar. This helps
+        saving space on the screen, reducing visual distractions and preventing
+        inadvertent changes of the drawing window’s size or position. All
+        functions can be invoked through the keys that appear in the tooltips of
+        the corresponding buttons on the toolbar. The keys 1 through 6 invoke
+        preset colors. When using the keys, take care of the drawing window
+        being the active (usually the topmost) window so that key presses are
+        not send to the wrong window or even the wrong program such as the web
+        browser. In text editing mode, you cannot use the key commands as they
+        would end up as characters in the text. To prevent this, leave the text
+        frame by clicking the X in its lower right corner.</p>
+
+    <h2>Tips for teachers</h2>
+    <p>To distribute mailARS among your students, you should</p>
+    <ol>
+        <li>copy the mailARS folder,</li>
+        <li>launch mailARS from that folder,</li>
+        <li>in the settings, delete the name to be displayed so that a random
+            number will be generated on the next launch of mailARS,</li>
+        <li>complete – as far as possible – the mail settings from the students’
+            perspective,</li>
+        <li>drag the windows to the left and top of your (primary, should you
+            use several) display screen and reduce their sizes, as the positions
+            and sizes are stored,</li>
+        <li>quit mailARS,</li>
+        <li>with exception of the folder <span class="typewriter">images</span>
+            delete all folders (which will be recreated automatically) within
+            the copy of the mailARS folder (data protection!), and</li>
+        <li>turn the copy of the mailARS folder into a zip archive (Windows:
+            right mouse button, Send to: Compressed (zipped) folder), which you
+            send to the students.</li>
+    </ol>
+    <p>As an alternative to distributing the bare Python code, you can hand a
+        complete Python environment (that possibly even does not require
+        installation) to your students, for instance based on <a
+            href="https://sourceforge.net/projects/winpython/files/WinPython_3.7/3.7.4.1/WinPython64-3.7.4.1Zero.exe">WinPython
+            Zero</a>.</p>
+    <p>Ask your students at the start of the term to send you an empty drawing
+        through mailARS. This way, your copy of mailARS collects the mail
+        addresses so that you can send problems to everybody.</p>
+    <p>At the beginning of every session, you should open a new drawing window
+        and use this as the central whiteboard for your class. If you use only a
+        single display screen, you should (screen-)share only this single
+        drawing window with your students and not transmit the entire screen. If
+        you use two display screens, you can extend this central drawing window
+        to one of the screens (which you then share) and move all other mailARS
+        windows (including further drawing windows) to the other screen. As
+        mailARS opens every further drawing window at the position and in the
+        size of the drawing window moved last, it is sufficient to drag a single
+        drawing window to the second screen. Then, all further drawing screens
+        will appear on the second screen. </p>
+    <script>
+        Array.from(document.getElementsByTagName('img'))
+            .forEach(el => el.setAttribute('title', el.getAttribute('alt')));
+    </script>
 </body>
+
 </html>

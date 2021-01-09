@@ -48,7 +48,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_send = widgets.QToolButton()
         self._button_send.setToolTip(self.tr("Send"))
-        self._button_send.setIcon(gui.QIcon("need_to_send.png" if self._is_dirty else "send.png"))
+        self._button_send.setIcon(gui.QIcon(os.path.join("images", "need_to_send.png" if self._is_dirty else "send.png")))
         self._button_send.setIconSize(core.QSize(32, 32))
         self._button_send.clicked.connect(self._drawing_widget.clean_ui)
         self._button_send.clicked.connect(self._send)
@@ -56,14 +56,14 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_addresses = widgets.QToolButton()
         self._button_addresses.setToolTip(self.tr("Addressees"))
-        self._button_addresses.setIcon(gui.QIcon("addressees.png"))
+        self._button_addresses.setIcon(gui.QIcon(os.path.join("images", "addressees.png")))
         self._button_addresses.setIconSize(core.QSize(32, 32))
         self._button_addresses.clicked.connect(self._exec_addressees_dialog)
         self._toolbar.addWidget(self._button_addresses)
 
         self._button_undo = widgets.QToolButton()
         self._button_undo.setToolTip(self.tr("Undo"))
-        self._button_undo.setIcon(gui.QIcon("undo.png"))
+        self._button_undo.setIcon(gui.QIcon(os.path.join("images", "undo.png")))
         self._button_undo.setIconSize(core.QSize(32, 32))
         self._button_undo.clicked.connect(self._undo)
         self._button_undo.setEnabled(False)
@@ -71,7 +71,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_redo = widgets.QToolButton()
         self._button_redo.setToolTip(self.tr("Redo"))
-        self._button_redo.setIcon(gui.QIcon("redo.png"))
+        self._button_redo.setIcon(gui.QIcon(os.path.join("images", "redo.png")))
         self._button_redo.setIconSize(core.QSize(32, 32))
         self._button_redo.clicked.connect(self._redo)
         self._button_redo.setEnabled(False)
@@ -92,7 +92,7 @@ class DrawingWindow(widgets.QMainWindow):
         
         self._button_draw = widgets.QToolButton()
         self._button_draw.setToolTip(self.tr("Draw"))
-        self._button_draw.setIcon(gui.QIcon("draw.png"))
+        self._button_draw.setIcon(gui.QIcon(os.path.join("images", "draw.png")))
         self._button_draw.setIconSize(core.QSize(32, 32))
         self._button_group_mode.addButton(self._button_draw, drawing_widget.Mode.DRAWING)
         self._toolbar.addWidget(self._button_draw)
@@ -105,7 +105,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_stroke_color = widgets.QToolButton()
         self._button_stroke_color.setToolTip(self.tr("Color"))
-        self._button_stroke_color.setIcon(gui.QIcon("color.png"))
+        self._button_stroke_color.setIcon(gui.QIcon(os.path.join("images", "color.png")))
         self._button_stroke_color.setIconSize(core.QSize(32, 32))
         self._button_stroke_color.clicked.connect(self._exec_color_dialog)
         self._toolbar.addWidget(self._button_stroke_color)
@@ -122,7 +122,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._silder_stroke_thickness.valueChanged.connect(self._stroke_thickness_changed)
         self._button_stroke_thickness = widgets.QToolButton()
         self._button_stroke_thickness.setToolTip(self.tr("Thickness"))
-        self._button_stroke_thickness.setIcon(gui.QIcon("stroke_thickness.png"))
+        self._button_stroke_thickness.setIcon(gui.QIcon(os.path.join("images", "stroke_thickness.png")))
         self._button_stroke_thickness.setIconSize(core.QSize(32, 32))
         self._button_stroke_thickness.clicked.connect(self._exec_stroke_thickness_slider)
         self._toolbar.addWidget(self._button_stroke_thickness)
@@ -131,7 +131,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_erase = widgets.QToolButton()
         self._button_erase.setToolTip(self.tr("Erase"))
-        self._button_erase.setIcon(gui.QIcon("erase.png"))
+        self._button_erase.setIcon(gui.QIcon(os.path.join("images", "erase.png")))
         self._button_erase.setIconSize(core.QSize(32, 32))
         self._button_erase.setCheckable(True)
         self._toolbar.addWidget(self._button_erase)
@@ -148,7 +148,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_text = widgets.QToolButton()
         self._button_text.setToolTip(self.tr("Type"))
-        self._button_text.setIcon(gui.QIcon("text.png"))
+        self._button_text.setIcon(gui.QIcon(os.path.join("images", "text.png")))
         self._button_text.setIconSize(core.QSize(32, 32))
         self._button_text.setCheckable(True)
         self._toolbar.addWidget(self._button_text)
@@ -166,7 +166,7 @@ class DrawingWindow(widgets.QMainWindow):
         self._silder_font_size.valueChanged.connect(self._font_size_changed)
         self._button_font_size = widgets.QToolButton()
         self._button_font_size.setToolTip(self.tr("Size"))
-        self._button_font_size.setIcon(gui.QIcon("font_size.png"))
+        self._button_font_size.setIcon(gui.QIcon(os.path.join("images", "font_size.png")))
         self._button_font_size.setIconSize(core.QSize(32, 32))
         self._button_font_size.clicked.connect(self._exec_font_size_slider)
         self._toolbar.addWidget(self._button_font_size)
@@ -182,7 +182,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_photo = widgets.QToolButton()
         self._button_photo.setToolTip(self.tr("Take Photo"))
-        self._button_photo.setIcon(gui.QIcon("photo.png"))
+        self._button_photo.setIcon(gui.QIcon(os.path.join("images", "photo.png")))
         self._button_photo.setIconSize(core.QSize(32, 32))
         self._button_photo.clicked.connect(self._shoot)
         self._toolbar.addWidget(self._button_photo)
@@ -198,7 +198,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_select = widgets.QToolButton()
         self._button_select.setToolTip(self.tr("Select"))
-        self._button_select.setIcon(gui.QIcon("select.png"))
+        self._button_select.setIcon(gui.QIcon(os.path.join("images", "select.png")))
         self._button_select.setIconSize(core.QSize(32, 32))
         self._button_select.setCheckable(True)
         self._toolbar.addWidget(self._button_select)
@@ -206,7 +206,7 @@ class DrawingWindow(widgets.QMainWindow):
 
         self._button_delete = widgets.QToolButton()
         self._button_delete.setToolTip(self.tr("Delete"))
-        self._button_delete.setIcon(gui.QIcon("delete.png"))
+        self._button_delete.setIcon(gui.QIcon(os.path.join("images", "delete.png")))
         self._button_delete.setIconSize(core.QSize(32, 32))
         self._button_delete.clicked.connect(self._drawing_widget.clean_ui)
         self._button_delete.clicked.connect(self._delete)
@@ -215,7 +215,7 @@ class DrawingWindow(widgets.QMainWindow):
         screen = preferences.get("drawing_screen")
         self.setGeometry(screen[0], screen[1], screen[2], screen[3])
         
-        self.setWindowIcon(gui.QIcon("program.png"))
+        self.setWindowIcon(gui.QIcon(os.path.join("images", "program.png")))
         self.show()
 
     def closeEvent(self, event: gui.QCloseEvent) -> None:
@@ -373,12 +373,12 @@ class DrawingWindow(widgets.QMainWindow):
 
     def set_dirty(self) -> None:
         if not self._is_dirty:
-            self._button_send.setIcon(gui.QIcon("need_to_send.png"))
+            self._button_send.setIcon(gui.QIcon(os.path.join("images", "need_to_send.png")))
             self._is_dirty = True
 
     def set_clean(self) -> None:
         if self._is_dirty:
-            self._button_send.setIcon(gui.QIcon("send.png"))
+            self._button_send.setIcon(gui.QIcon(os.path.join("images", "send.png")))
             self._is_dirty = False
 
     def _shoot(self) -> None:

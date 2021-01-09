@@ -1,2 +1,6 @@
-*/*
+__pycache__
+drafts
+export
+inbox
+outbox
 preferences.txt

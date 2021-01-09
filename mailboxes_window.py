@@ -21,6 +21,7 @@ import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets 
 import PyQt5.QtGui as gui
 import datetime
+import os
 import preferences
 import mailbox_widget
 import mailing
@@ -51,14 +52,14 @@ class MailboxesWindow(widgets.QMainWindow):
 
         self._button_fetch_mail = widgets.QToolButton(self)
         self._button_fetch_mail.setToolTip(self.tr("Fetch mail"))
-        self._button_fetch_mail.setIcon(gui.QIcon("fetch.png"))
+        self._button_fetch_mail.setIcon(gui.QIcon(os.path.join("images", "fetch.png")))
         self._button_fetch_mail.setIconSize(core.QSize(32, 32))
         self._button_fetch_mail.clicked.connect(self._fetch_mails)
         toolbar.addWidget(self._button_fetch_mail)
 
         self._button_group_by_sender = widgets.QToolButton(self)
         self._button_group_by_sender.setToolTip(self.tr("Only show latest mail of every sender"))
-        self._button_group_by_sender.setIcon(gui.QIcon("group_by_sender.png"))
+        self._button_group_by_sender.setIcon(gui.QIcon(os.path.join("images", "group_by_sender.png")))
         self._button_group_by_sender.setIconSize(core.QSize(32, 32))
         self._button_group_by_sender.clicked.connect(self._group_by_sender)
         self._button_group_by_sender.setCheckable(True)
@@ -69,7 +70,7 @@ class MailboxesWindow(widgets.QMainWindow):
 
         button_new_draft = widgets.QToolButton(self)
         button_new_draft.setToolTip(self.tr("New draft"))
-        button_new_draft.setIcon(gui.QIcon("new.png"))
+        button_new_draft.setIcon(gui.QIcon(os.path.join("images", "new.png")))
         button_new_draft.setIconSize(core.QSize(32, 32))
         button_new_draft.clicked.connect(self._new_draft)
         toolbar.addWidget(button_new_draft)
@@ -80,13 +81,13 @@ class MailboxesWindow(widgets.QMainWindow):
 
         self._button_pdf_export = widgets.QToolButton(self)
         self._button_pdf_export.setToolTip(self.tr("Export as PDF"))
-        self._button_pdf_export.setIcon(gui.QIcon("export_to_pdf.png"))
+        self._button_pdf_export.setIcon(gui.QIcon(os.path.join("images", "export_to_pdf.png")))
         self._button_pdf_export.setIconSize(core.QSize(32, 32))
         self._button_pdf_export.clicked.connect(self._export_pdf)
         toolbar.addWidget(self._button_pdf_export)
         self._timer_export_pdf = core.QTimer(self)
         self._timer_export_pdf.setSingleShot(True)
-        self._timer_export_pdf.timeout.connect(lambda: self._button_pdf_export.setIcon(gui.QIcon("export_to_pdf.png")))
+        self._timer_export_pdf.timeout.connect(lambda: self._button_pdf_export.setIcon(gui.QIcon(os.path.join("images", "export_to_pdf.png"))))
 
         label_separator = widgets.QLabel()
         label_separator.setText("      ")
@@ -105,7 +106,7 @@ class MailboxesWindow(widgets.QMainWindow):
         self._slider_num_columns.valueChanged.connect(self._num_columns_changed)
         self._button_num_columns = widgets.QToolButton()
         self._button_num_columns.setToolTip(self.tr("Number of columns"))
-        self._button_num_columns.setIcon(gui.QIcon("columns.png"))
+        self._button_num_columns.setIcon(gui.QIcon(os.path.join("images", "columns.png")))
         self._button_num_columns.setIconSize(core.QSize(32, 32))
         self._button_num_columns.clicked.connect(self._exec_num_columns_slider)
         toolbar.addWidget(self._button_num_columns)
@@ -116,7 +117,7 @@ class MailboxesWindow(widgets.QMainWindow):
 
         button_edit_preferences = widgets.QToolButton(self)
         button_edit_preferences.setToolTip(self.tr("Settings"))
-        button_edit_preferences.setIcon(gui.QIcon("settings.png"))
+        button_edit_preferences.setIcon(gui.QIcon(os.path.join("images", "settings.png")))
         button_edit_preferences.setIconSize(core.QSize(32, 32))
         button_edit_preferences.clicked.connect(self._edit_preferences)
         toolbar.addWidget(button_edit_preferences)
@@ -124,7 +125,7 @@ class MailboxesWindow(widgets.QMainWindow):
         screen = preferences.get("mailboxes_screen")
         self.setGeometry(screen[0], screen[1], screen[2], screen[3])
 
-        self.setWindowIcon(gui.QIcon("program.png"))
+        self.setWindowIcon(gui.QIcon(os.path.join("images", "program.png")))
         self.show()
 
         mailing.start_receiver(self)
@@ -143,11 +144,11 @@ class MailboxesWindow(widgets.QMainWindow):
         when: datetime.datetime, \
         message_id: str) -> None:       
         self._inbox.add_item(address, name, elements, when, message_id)
-        self._button_fetch_mail.setIcon(gui.QIcon("fetch.png"))
+        self._button_fetch_mail.setIcon(gui.QIcon(os.path.join("images", "fetch.png")))
 
     @core.pyqtSlot()
     def got_mail(self) -> None:
-        self._button_fetch_mail.setIcon(gui.QIcon("need_to_fetch.png"))
+        self._button_fetch_mail.setIcon(gui.QIcon(os.path.join("images", "need_to_fetch.png")))
 
     @core.pyqtSlot(bool)
     def set_fetch_mail_status(self, status: bool) -> None:
@@ -195,7 +196,7 @@ class MailboxesWindow(widgets.QMainWindow):
         if widget is None:
             return
         if widget.export_pdf():
-            self._button_pdf_export.setIcon(gui.QIcon("export_to_pdf_done.png"))
+            self._button_pdf_export.setIcon(gui.QIcon(os.path.join("images", "export_to_pdf_done.png")))
             self._timer_export_pdf.start(500)
 
     def get_addresses(self) -> typing.List[typing.Tuple[str, str]]:
