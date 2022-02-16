@@ -36,7 +36,7 @@ class AddresseesDialog(widgets.QDialog):
         self._send_to_explicit_receiver = send_to_explicit_receiver
         self._addresses: typing.List[typing.Tuple[str, str]] = addresses_in_thumbnail
 
-        self.setWindowTitle("An wen schicken?")
+        self.setWindowTitle(self.tr("An wen schicken?"))
 
         layout = widgets.QHBoxLayout(self)
         self.setLayout(layout)
@@ -61,7 +61,7 @@ class AddresseesDialog(widgets.QDialog):
             content_layout.addWidget(self._check_from_prefs)
             content_layout.addWidget(widgets.QLabel())
 
-        self._check_all = widgets.QCheckBox("An alle empfangenen Adressen")
+        self._check_all = widgets.QCheckBox(self.tr("An alle empfangenen Adressen"))
         self._check_all.setChecked(send_to_all)
         self._check_all.stateChanged.connect(self._check_all_state_changed)
         content_layout.addWidget(self._check_all)
