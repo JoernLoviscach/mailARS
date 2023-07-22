@@ -8,4 +8,5 @@ SOURCES      = __main__.py \
                preferences.py \
                thumbnail.py
 TRANSLATIONS = translation_en.ts \
-               translation_de.ts
+               translation_de.ts \
+               translation_uk.ts
