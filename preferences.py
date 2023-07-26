@@ -136,6 +136,10 @@ class PreferencesDialog(widgets.QDialog):
         self._radio_ukrainian.setText("uk")
         self._radio_ukrainian.setChecked(get("language") == "uk")
         language_group_radios_layout.addWidget(self._radio_ukrainian, core.Qt.AlignLeft)
+        self._radio_russian = widgets.QRadioButton()
+        self._radio_russian.setText("ru")
+        self._radio_russian.setChecked(get("language") == "ru")
+        language_group_radios_layout.addWidget(self._radio_russian, core.Qt.AlignLeft)
 
         language_group_outer_layout.addWidget(widgets.QLabel(self.tr("Changes are applied on next start")))
 
@@ -197,8 +201,10 @@ class PreferencesDialog(widgets.QDialog):
         lang = "en"
         if self._radio_german.isChecked():
             lang = "de"
-        if self._radio_ukrainian.isChecked():
+        elif self._radio_ukrainian.isChecked():
             lang = "uk"
+        elif self._radio_russian.isChecked():
+            lang = "ru"
         set("language", lang)
         set("name", self._name.text().strip())
         set("smtp_sender", self._smtp_sender.text().strip())

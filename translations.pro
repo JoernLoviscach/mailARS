@@ -10,3 +10,4 @@ SOURCES      = __main__.py \
 TRANSLATIONS = translation_en.ts \
                translation_de.ts \
                translation_uk.ts
+               translation_ru.ts
